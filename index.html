@@ -241,6 +241,32 @@
   .rival .rlast{font-size:12px;color:var(--ink-soft);}
   .scout-note{margin-top:12px;font-size:12.5px;color:var(--ink-faint);line-height:1.55;}
 
+  /* clickable rival cards */
+  .rival{cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;}
+  .rival:hover{border-color:var(--court-2);transform:translateY(-2px);}
+  .rival.sel{border-color:var(--court-2);box-shadow:0 0 0 2px var(--court-2);}
+  .rival:focus-visible{outline:2px solid var(--court-2);outline-offset:2px;}
+
+  /* rival watch spotlight */
+  .watch{background:linear-gradient(150deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;position:relative;}
+  .watch .wtop{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:20px 22px;border-bottom:1px solid var(--line-2);}
+  .watch .wname{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.03em;font-weight:700;font-size:clamp(20px,4vw,28px);line-height:1;}
+  .watch .wname .sub{display:block;font-family:var(--f-body);text-transform:none;font-weight:400;font-size:11.5px;letter-spacing:.02em;color:var(--ink-faint);margin-top:6px;}
+  .watch .wbody{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;padding:20px 22px;}
+  .wstat{display:flex;flex-direction:column;gap:5px;}
+  .wstat .k{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:var(--ink-faint);}
+  .wstat .v{font-family:var(--f-mono);font-weight:700;font-size:24px;letter-spacing:-.02em;}
+  .edge{padding:0 22px 20px;}
+  .edge .bar{display:flex;height:36px;border-radius:11px;overflow:hidden;border:1px solid var(--line);}
+  .edge .me,.edge .them{display:flex;align-items:center;font-family:var(--f-display);font-size:11px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
+  .edge .me{background:var(--court);color:#fff;justify-content:flex-start;padding:0 12px;gap:8px;}
+  .edge .them{background:var(--surface-3);color:var(--ink-soft);justify-content:flex-end;padding:0 12px;flex:1;}
+  .edge .cap{margin-top:9px;font-size:12.5px;color:var(--ink-soft);line-height:1.5;}
+  .watch-note{padding:0 22px 20px;}
+  .watch-note .lbl{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:var(--ink-faint);display:block;margin-bottom:7px;}
+  .watch-note [data-field]{display:block;min-height:1.4em;font-size:13.5px;padding:10px 12px;border:1px dashed var(--line);border-radius:10px;background:var(--surface);}
+  .watch-note [data-field].is-empty{color:var(--ink-faint);font-style:italic;}
+
   .upcoming{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px;}
   .upcard{background:var(--surface);border:1px dashed var(--line);border-radius:15px;padding:16px;display:flex;flex-direction:column;gap:6px;}
   .upcard .uname{font-family:var(--f-display);text-transform:uppercase;font-weight:700;letter-spacing:.03em;font-size:15px;}
@@ -389,6 +415,13 @@
     <div class="block-head"><h2>Rivals &amp; head-to-head</h2><span class="rule"></span><span class="count">from played matches</span></div>
     <div class="rivals" id="rivals"></div>
     <p class="scout-note">Head-to-heads pulled from her published WTN match results &mdash; players near her level she&rsquo;s already faced. <strong>Nearest rating</strong> and any <strong>rematch</strong> are flagged. Send me an upcoming draw and I&rsquo;ll add the whole field here with WTNs and H2H.</p>
+  </section>
+
+  <!-- ============ RIVAL WATCH ============ -->
+  <section class="block">
+    <div class="block-head"><h2>Rival Watch</h2><span class="rule"></span><span class="count" id="watchHint">tap a rival to watch</span></div>
+    <div class="watch" id="watch"></div>
+    <p class="scout-note">Tap any rival above to spotlight her here &mdash; head-to-head, the WTN gap, and a place to log her latest results as you spot them (public tournament data only). Set on <strong>B. Thurman</strong> by default: the one to avenge. &#127919;</p>
   </section>
 
   <!-- ============ UPCOMING ============ -->
@@ -595,17 +628,53 @@
     {opp:"R. Connell",wtn:"37.9", h2h:"1–0", win:true,  last:"W 4–0, 4–0 · Jul 4"},
     {opp:"E. Paul",   wtn:"38.5", h2h:"1–0", win:true,  last:"W 4–1, 4–1 · Jul 4"}
   ];
-  var rc=document.getElementById("rivals");
+  var CAM_WTN=33.3;
+  var rc=document.getElementById("rivals"); var rivalEls=[];
   if(rc){ RIVALS.forEach(function(r,i){
     var el=document.createElement("div"); el.className="rival rise"; el.style.transitionDelay=(i*0.05)+"s";
+    el.setAttribute("role","button"); el.setAttribute("tabindex","0"); el.setAttribute("aria-label","Watch "+r.opp);
     var tag = r.tag==="near" ? '<span class="rtag near">Nearest rating</span>'
             : r.tag==="rematch" ? '<span class="rtag rematch">Rematch watch</span>' : '';
     el.innerHTML = tag +
       '<div class="rtop"><span class="ropp">'+esc(r.opp)+'</span><span class="rwtn">WTN '+esc(r.wtn)+'</span></div>'+
       '<div class="rh2h"><span class="big '+(r.win?'lead':'trail')+'">'+r.h2h+'</span><span class="h2hlab">H2H</span></div>'+
       '<div class="rlast">'+esc(r.last)+'</div>';
-    rc.appendChild(el);
+    el.addEventListener("click",function(){ selectWatch(i); });
+    el.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); selectWatch(i); } });
+    rc.appendChild(el); rivalEls.push(el);
   }); }
+
+  /* -------- rival watch spotlight -------- */
+  var watchEl=document.getElementById("watch"), watchHint=document.getElementById("watchHint");
+  function selectWatch(i){ set("watchIdx",String(i)); renderWatch(i); }
+  function renderWatch(i){
+    if(!watchEl) return;
+    var r=RIVALS[i], theirWtn=parseFloat(r.wtn), edge=theirWtn-CAM_WTN, ahead=edge>0;
+    var status = r.win
+      ? '<span class="pill played">Lead to protect &middot; H2H '+r.h2h+'</span>'
+      : '<span class="pill" style="background:var(--loss-soft);color:var(--loss);border:1px solid var(--loss)"><span aria-hidden="true">&#9654;</span> Rematch watch &middot; H2H '+r.h2h+'</span>';
+    var meShare=Math.round(theirWtn/(theirWtn+CAM_WTN)*100);
+    meShare=Math.max(30,Math.min(70,meShare));
+    var cap = ahead
+      ? 'Camilla is rated <strong>'+edge.toFixed(1)+' ahead</strong> &mdash; lower WTN is stronger. On paper, this rematch is hers to take.'
+      : 'Camilla trails by <strong>'+Math.abs(edge).toFixed(1)+'</strong> on WTN &mdash; a real test, and a great scalp.';
+    rivalEls.forEach(function(e,idx){ e.classList.toggle("sel",idx===i); });
+    if(watchHint) watchHint.textContent="watching "+r.opp;
+    watchEl.innerHTML =
+      '<div class="wtop"><div class="wname">'+esc(r.opp)+'<span class="sub">World Tennis Number '+esc(r.wtn)+'</span></div>'+status+'</div>'+
+      '<div class="wbody">'+
+        '<div class="wstat"><span class="k">Head-to-head</span><span class="v" style="color:'+(r.win?'var(--win)':'var(--loss)')+'">'+r.h2h+'</span></div>'+
+        '<div class="wstat"><span class="k">Their WTN</span><span class="v">'+esc(r.wtn)+'</span></div>'+
+        '<div class="wstat"><span class="k">Camilla&rsquo;s WTN</span><span class="v" style="color:var(--court)">'+CAM_WTN.toFixed(1)+'</span></div>'+
+        '<div class="wstat"><span class="k">Last meeting</span><span class="v" style="font-size:13.5px;font-family:var(--f-body);font-weight:600">'+esc(r.last)+'</span></div>'+
+      '</div>'+
+      '<div class="edge"><div class="bar"><div class="me" style="flex:0 0 '+meShare+'%">Camilla '+CAM_WTN.toFixed(1)+'</div><div class="them">'+esc(r.opp)+' '+esc(r.wtn)+'</div></div><div class="cap">'+cap+'</div></div>'+
+      '<div class="watch-note"><span class="lbl">Latest on '+esc(r.opp)+' &mdash; tap to add</span><div data-field="watch_'+i+'" data-placeholder="Log her recent results / next event as you spot them"></div></div>';
+    var nf=watchEl.querySelector('[data-field]'); if(nf) wireField(nf);
+  }
+  var defIdx=(function(){ var s=get("watchIdx",null); if(s!==null){ var n=parseInt(s,10); if(!isNaN(n)&&n>=0&&n<RIVALS.length) return n; }
+    for(var k=0;k<RIVALS.length;k++){ if(RIVALS[k].tag==="rematch") return k; } return 0; })();
+  renderWatch(defIdx);
 
   /* -------- reveal -------- */
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.getElementById("wrap").classList.add("revealed"); }); });
