@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0E4A5E">
+</head>
+<body>
+<title>Camilla's Season — Junior Tennis</title>
+
+<style>
+  /* ================= TOKENS ================= */
+  :root{
+    --ground:#ECF0EA; --surface:#FFFFFF; --surface-2:#F2F6F0; --surface-3:#E7EEE6;
+    --ink:#0D1613; --ink-soft:#48584F; --ink-faint:#7A897F;
+    --court:#0E4A5E; --court-2:#1A7C97; --court-soft:rgba(26,124,151,.12); --court-glow:rgba(26,124,151,.22);
+    --optic:#8FBE0C; --optic-bright:#B7E01F; --optic-ink:#182600;
+    --gold:#A9791F; --gold-bright:#C79A3A; --gold-soft:rgba(169,121,31,.14);
+    --line:rgba(13,22,19,.12); --line-2:rgba(13,22,19,.06);
+    --win:#3E9D4E; --win-soft:rgba(62,157,78,.14); --loss:#C6543C; --loss-soft:rgba(198,84,60,.14);
+    --shadow-s:0 1px 2px rgba(13,22,19,.05);
+    --shadow:0 2px 6px rgba(13,22,19,.05),0 14px 40px rgba(13,22,19,.09);
+    --hero-1:#0E4A5E; --hero-2:#082F3D; --hero-3:#0b3f4f;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ground:#060D0F; --surface:#0D1A1C; --surface-2:#122529; --surface-3:#163035;
+      --ink:#EAF2ED; --ink-soft:#A2B6AF; --ink-faint:#6C817A;
+      --court:#39A0BE; --court-2:#57BBD6; --court-soft:rgba(57,160,190,.16); --court-glow:rgba(57,160,190,.30);
+      --optic:#C7EA3B; --optic-bright:#DBF75B; --optic-ink:#0f1e08;
+      --gold:#D7B357; --gold-bright:#ECC96A; --gold-soft:rgba(215,179,87,.16);
+      --line:rgba(234,242,237,.14); --line-2:rgba(234,242,237,.06);
+      --win:#57C168; --win-soft:rgba(87,193,104,.18); --loss:#E0715A; --loss-soft:rgba(224,113,90,.18);
+      --shadow-s:0 1px 2px rgba(0,0,0,.4);
+      --shadow:0 2px 6px rgba(0,0,0,.4),0 18px 50px rgba(0,0,0,.55);
+      --hero-1:#0c3948; --hero-2:#04191f; --hero-3:#0a2f3a;
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#ECF0EA;--surface:#FFFFFF;--surface-2:#F2F6F0;--surface-3:#E7EEE6;--ink:#0D1613;--ink-soft:#48584F;--ink-faint:#7A897F;
+    --court:#0E4A5E;--court-2:#1A7C97;--court-soft:rgba(26,124,151,.12);--court-glow:rgba(26,124,151,.22);--optic:#8FBE0C;--optic-bright:#B7E01F;--optic-ink:#182600;
+    --gold:#A9791F;--gold-bright:#C79A3A;--gold-soft:rgba(169,121,31,.14);--line:rgba(13,22,19,.12);--line-2:rgba(13,22,19,.06);
+    --win:#3E9D4E;--win-soft:rgba(62,157,78,.14);--loss:#C6543C;--loss-soft:rgba(198,84,60,.14);
+    --shadow-s:0 1px 2px rgba(13,22,19,.05);--shadow:0 2px 6px rgba(13,22,19,.05),0 14px 40px rgba(13,22,19,.09);
+    --hero-1:#0E4A5E;--hero-2:#082F3D;--hero-3:#0b3f4f;
+  }
+  :root[data-theme="dark"]{
+    --ground:#060D0F;--surface:#0D1A1C;--surface-2:#122529;--surface-3:#163035;--ink:#EAF2ED;--ink-soft:#A2B6AF;--ink-faint:#6C817A;
+    --court:#39A0BE;--court-2:#57BBD6;--court-soft:rgba(57,160,190,.16);--court-glow:rgba(57,160,190,.30);--optic:#C7EA3B;--optic-bright:#DBF75B;--optic-ink:#0f1e08;
+    --gold:#D7B357;--gold-bright:#ECC96A;--gold-soft:rgba(215,179,87,.16);--line:rgba(234,242,237,.14);--line-2:rgba(234,242,237,.06);
+    --win:#57C168;--win-soft:rgba(87,193,104,.18);--loss:#E0715A;--loss-soft:rgba(224,113,90,.18);
+    --shadow-s:0 1px 2px rgba(0,0,0,.4);--shadow:0 2px 6px rgba(0,0,0,.4),0 18px 50px rgba(0,0,0,.55);
+    --hero-1:#0c3948;--hero-2:#04191f;--hero-3:#0a2f3a;
+  }
+
+  *{box-sizing:border-box;}
+  :root{
+    --f-display:"Futura","Avenir Next Condensed","Century Gothic",ui-sans-serif,system-ui,sans-serif;
+    --f-body:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,sans-serif;
+    --f-mono:ui-monospace,"SF Mono","JetBrains Mono","Menlo","Roboto Mono",monospace;
+  }
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;}
+  .wrap{background:var(--ground);color:var(--ink);font-family:var(--f-body);line-height:1.5;min-height:100%;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .shell{max-width:1120px;margin:0 auto;padding:clamp(16px,3.5vw,38px);}
+  h1,h2,h3,p{margin:0;text-wrap:balance;}
+  .mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums;}
+
+  .rise{opacity:0;transform:translateY(14px);}
+  .revealed .rise{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
+  .revealed .rise.d1{transition-delay:.06s;} .revealed .rise.d2{transition-delay:.12s;}
+  .revealed .rise.d3{transition-delay:.18s;} .revealed .rise.d4{transition-delay:.24s;}
+
+  /* ================= MASTHEAD ================= */
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:clamp(16px,3vw,26px);}
+  .wordmark{display:flex;align-items:center;gap:11px;}
+  .ball{width:28px;height:28px;border-radius:50%;flex:none;position:relative;
+    background:radial-gradient(circle at 32% 28%,var(--optic-bright),var(--optic) 72%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08),0 2px 8px var(--court-glow);}
+  .ball::before,.ball::after{content:"";position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,.9);}
+  .ball::before{clip-path:inset(0 55% 0 0);transform:scaleX(1.7) translateX(18%);opacity:.75;}
+  .ball::after{clip-path:inset(0 0 0 55%);transform:scaleX(1.7) translateX(-18%);opacity:.75;}
+  .wordmark b{font-family:var(--f-display);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:15px;}
+  .wordmark small{color:var(--ink-faint);letter-spacing:.16em;text-transform:uppercase;font-size:10.5px;font-family:var(--f-display);}
+  .theme-btn{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.12em;font-size:11px;background:var(--surface);color:var(--ink-soft);
+    border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;transition:.2s;}
+  .theme-btn:hover{border-color:var(--court-2);color:var(--court-2);}
+  .theme-btn:focus-visible{outline:2px solid var(--court-2);outline-offset:2px;}
+
+  /* ================= HERO ================= */
+  .hero{position:relative;overflow:hidden;border-radius:26px;color:#fff;box-shadow:var(--shadow);isolation:isolate;
+    background:radial-gradient(120% 140% at 82% 8%,var(--hero-3) 0%,var(--hero-1) 38%,var(--hero-2) 100%);}
+  .hero .court{position:absolute;inset:0;z-index:0;opacity:.14;mix-blend-mode:screen;}
+  .hero .glow{position:absolute;z-index:0;width:520px;height:520px;right:-140px;top:-190px;border-radius:50%;
+    background:radial-gradient(circle,var(--optic-bright),transparent 62%);opacity:.20;filter:blur(6px);}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:clamp(20px,4vw,44px);align-items:center;padding:clamp(24px,4.5vw,48px);}
+  .eyebrow{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.3em;font-size:11.5px;color:rgba(255,255,255,.66);display:flex;align-items:center;gap:9px;}
+  .eyebrow .pindot{width:6px;height:6px;border-radius:50%;background:var(--optic-bright);box-shadow:0 0 10px var(--optic-bright);}
+  .name{font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:.86;margin:.16em 0 .06em;
+    font-size:clamp(50px,11.5vw,110px);text-shadow:0 4px 34px rgba(0,0,0,.3);}
+  .name em{font-style:normal;color:var(--optic-bright);}
+  .surname{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.26em;font-size:clamp(13px,2.4vw,16px);color:rgba(255,255,255,.72);margin-bottom:14px;}
+  .creds{display:flex;flex-wrap:wrap;gap:8px;}
+  .cred{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:11.5px;color:#fff;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 13px;backdrop-filter:blur(3px);}
+  .cred.gold{color:#F3D889;border-color:rgba(243,216,137,.5);background:rgba(243,216,137,.10);}
+  .cred.optic{color:var(--optic-ink);background:var(--optic-bright);border-color:transparent;font-weight:700;}
+  .cred .star{color:#F3D889;}
+
+  .badge{position:relative;width:clamp(150px,26vw,196px);height:clamp(150px,26vw,196px);flex:none;display:grid;place-items:center;}
+  .badge svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);}
+  .badge .ring-bg{fill:none;stroke:rgba(255,255,255,.14);stroke-width:8;}
+  .badge .ring-fg{fill:none;stroke:url(#ringgrad);stroke-width:8;stroke-linecap:round;stroke-dasharray:534;stroke-dashoffset:534;}
+  .revealed .badge .ring-fg{transition:stroke-dashoffset 1.3s cubic-bezier(.2,.7,.2,1) .25s;}
+  .badge .inner{text-align:center;display:flex;flex-direction:column;align-items:center;gap:1px;z-index:1;}
+  .badge .rlabel{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.2em;font-size:10.5px;color:rgba(255,255,255,.7);}
+  .badge .rnum{font-family:var(--f-mono);font-weight:700;font-size:clamp(38px,8vw,58px);line-height:.9;letter-spacing:-.02em;color:#fff;}
+  .badge .rnum[data-field].is-empty{font-family:var(--f-body);font-style:italic;font-size:14px;line-height:1.25;color:rgba(255,255,255,.72);max-width:120px;font-weight:400;}
+  .badge .rsub{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.12em;font-size:9.5px;color:var(--optic-bright);display:flex;align-items:center;gap:5px;margin-top:2px;}
+  .badge .rsub .vchk{width:12px;height:12px;fill:var(--optic-bright);}
+  .trend{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.08em;font-size:9.5px;color:#bfe36a;background:rgba(0,0,0,.25);padding:3px 8px;border-radius:999px;}
+
+  .form-strip{position:relative;z-index:1;display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+    padding:clamp(14px,2.5vw,18px) clamp(24px,4.5vw,48px);border-top:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.16);}
+  .form-strip .lab{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:rgba(255,255,255,.62);margin-right:4px;}
+  .fchip{min-width:32px;height:32px;padding:0 8px;border-radius:9px;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:13px;
+    background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);color:#fff;transform:scale(.6);opacity:0;}
+  .revealed .fchip{transform:none;opacity:1;transition:transform .5s cubic-bezier(.2,1.4,.4,1),opacity .5s;}
+  .fchip.title{background:linear-gradient(160deg,#F3D889,var(--gold));color:#3a2905;border-color:transparent;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+  .fchip.w{background:rgba(87,193,104,.24);border-color:rgba(87,193,104,.6);color:#cdf5d4;}
+  .fchip.l{background:rgba(224,113,90,.24);border-color:rgba(224,113,90,.6);color:#f6cfc4;}
+  .form-strip .note{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:rgba(255,255,255,.5);margin-left:auto;}
+
+  /* ================= SECTIONS ================= */
+  section.block{margin-top:clamp(24px,4.5vw,44px);}
+  .block-head{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+  .block-head h2{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.18em;font-size:13.5px;color:var(--ink-soft);}
+  .block-head .rule{height:1px;flex:1;background:var(--line);}
+  .block-head .count{font-family:var(--f-mono);font-size:12px;color:var(--ink-faint);}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+  .stat .ic{position:absolute;right:14px;top:14px;width:26px;height:26px;opacity:.16;}
+  .stat .ic svg{width:100%;height:100%;stroke:var(--court-2);fill:none;stroke-width:1.6;}
+  .stat.accent .ic svg{stroke:var(--optic);} .stat.gold .ic svg{stroke:var(--gold);}
+  .stat .v{font-family:var(--f-mono);font-weight:700;font-size:clamp(30px,6vw,44px);letter-spacing:-.02em;line-height:1;}
+  .stat.gold .v{color:var(--gold);} .stat.accent .v{color:var(--court);}
+  .stat .l{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--ink-faint);margin-top:10px;}
+  .stat .sub{font-size:11.5px;color:var(--ink-faint);margin-top:3px;}
+
+  .cols{display:grid;grid-template-columns:1fr .82fr;gap:clamp(14px,2.5vw,20px);align-items:start;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;}
+  .card .ch{padding:16px 20px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .card .ch .t{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:var(--ink-soft);}
+  .card .cb{padding:20px;}
+  .edit-hint{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.08em;font-size:10.5px;color:var(--ink-faint);display:inline-flex;gap:6px;align-items:center;}
+  .edit-hint svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;}
+
+  .rate-lines{display:flex;flex-direction:column;gap:12px;}
+  .rate-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:13px;background:var(--surface-2);}
+  .rate-row .k{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--ink-soft);}
+  .rate-row .val{font-family:var(--f-mono);font-weight:700;font-size:18px;}
+  .rate-note{margin-top:14px;font-size:12.5px;color:var(--ink-soft);line-height:1.55;}
+  .profile-link{margin-top:14px;display:inline-flex;align-items:center;gap:8px;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:11px;
+    color:var(--court-2);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:9px 15px;transition:.2s;}
+  .profile-link:hover{border-color:var(--court-2);background:var(--court-soft);}
+  .profile-link svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;}
+
+  /* trajectory chart */
+  .chartwrap{position:relative;}
+  .chartsvg{width:100%;height:172px;display:block;}
+  .chart-cap{margin-top:12px;font-size:12px;color:var(--ink-faint);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  .chart-cap b{color:var(--win);font-family:var(--f-display);letter-spacing:.06em;}
+
+  /* ================= TIMELINE ================= */
+  .timeline{display:flex;flex-direction:column;gap:14px;}
+  .tcard{display:grid;grid-template-columns:76px 1fr;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;}
+  .tdate{background:var(--surface-3);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 8px;border-right:1px solid var(--line-2);}
+  .tdate .mo{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--court-2);}
+  .tdate .dy{font-family:var(--f-mono);font-weight:700;font-size:26px;line-height:1;margin-top:2px;}
+  .tbody{padding:16px 20px;position:relative;}
+  .tbody::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:var(--court);}
+  .tcard.title .tbody::before{background:linear-gradient(var(--gold-bright),var(--gold));}
+  .ttop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .tname{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.03em;font-weight:700;font-size:clamp(15px,2.6vw,19px);line-height:1.1;}
+  .tmeta{color:var(--ink-faint);font-size:12.5px;margin-top:5px;display:flex;flex-wrap:wrap;gap:4px 10px;}
+  .pill{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:10.5px;padding:6px 11px;border-radius:999px;display:inline-flex;gap:6px;align-items:center;white-space:nowrap;}
+  .pill.champ{background:var(--gold-soft);color:var(--gold);border:1px solid var(--gold);}
+  .pill.played{background:var(--court-soft);color:var(--court-2);border:1px solid var(--court-2);}
+  .pill.pending{background:var(--surface-2);color:var(--ink-faint);border:1px dashed var(--line);}
+  .matches{display:grid;gap:8px;margin-top:14px;}
+  .match{display:grid;grid-template-columns:26px 1fr auto;gap:11px;align-items:center;font-size:13.5px;padding:8px 0;border-top:1px solid var(--line-2);}
+  .match:first-child{border-top:none;}
+  .mres{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:11px;}
+  .mres.w{background:var(--win-soft);color:var(--win);} .mres.l{background:var(--loss-soft);color:var(--loss);}
+  .mopp{color:var(--ink);} .mopp .wtn{color:var(--ink-faint);font-family:var(--f-mono);font-size:11.5px;margin-left:6px;}
+  .mscore{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink-soft);white-space:nowrap;}
+  .add-note{margin-top:12px;font-size:12.5px;color:var(--ink-faint);}
+  .add-note [data-field].is-empty{font-style:italic;border-bottom:1.5px dashed var(--court-2);}
+
+  [data-field]{outline:none;border-radius:6px;transition:background .15s,box-shadow .15s;cursor:text;padding:0 3px;margin:0 -3px;}
+  [data-field]:hover{background:var(--court-glow);}
+  [data-field]:focus{background:var(--court-glow);box-shadow:0 0 0 2px var(--court-2);}
+  [data-field].is-empty{color:var(--ink-faint);font-style:italic;}
+  .tname[data-field].is-empty{border-bottom:1.5px dashed var(--court-2);}
+
+  .next{position:relative;overflow:hidden;border-radius:20px;padding:clamp(22px,4vw,30px);box-shadow:var(--shadow);
+    background:linear-gradient(150deg,var(--surface),var(--surface-2));border:1px solid var(--line);}
+  .next::after{content:"";position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;
+    background:radial-gradient(circle at 35% 32%,var(--optic-bright),var(--optic) 72%);opacity:.13;}
+  .next .kick{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.22em;font-size:11.5px;color:var(--court-2);}
+  .next h3{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.03em;font-weight:700;font-size:clamp(21px,4vw,30px);margin:8px 0 4px;}
+  .next .when{color:var(--ink-soft);font-size:14px;}
+  .countdown{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
+  .cd{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;min-width:74px;text-align:center;box-shadow:var(--shadow-s);}
+  .cd .n{font-family:var(--f-mono);font-weight:700;font-size:28px;line-height:1;letter-spacing:-.02em;color:var(--court);}
+  .cd .u{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.14em;font-size:9.5px;color:var(--ink-faint);margin-top:7px;}
+  .next-controls{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+  .date-input{font-family:var(--f-body);font-size:13px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);}
+  .hype{margin-top:16px;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.05em;font-size:clamp(14px,2.4vw,17px);color:var(--court);display:flex;gap:11px;align-items:center;min-height:1.4em;}
+  .hype .spark{color:var(--optic);} .hype-text{transition:opacity .4s;}
+
+  footer{margin-top:clamp(30px,5vw,54px);padding-top:22px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;color:var(--ink-faint);font-size:12.5px;}
+  footer .love{display:flex;align-items:center;gap:8px;} footer .heart{color:var(--gold);}
+  .tag{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:10.5px;}
+
+  /* rivals + upcoming */
+  .rivals{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px;}
+  .rival{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:15px 16px 14px;box-shadow:var(--shadow-s);display:flex;flex-direction:column;gap:9px;position:relative;overflow:hidden;}
+  .rival .rtag{position:absolute;top:0;right:0;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.08em;font-size:9px;padding:4px 9px;border-bottom-left-radius:11px;}
+  .rival .rtag.near{background:var(--court-soft);color:var(--court-2);}
+  .rival .rtag.rematch{background:var(--loss-soft);color:var(--loss);}
+  .rival .rtop{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding-right:70px;}
+  .rival .ropp{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.03em;font-weight:700;font-size:15px;}
+  .rival .rwtn{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-faint);white-space:nowrap;}
+  .rival .rh2h{display:flex;align-items:baseline;gap:9px;}
+  .rival .rh2h .big{font-family:var(--f-mono);font-weight:700;font-size:21px;letter-spacing:-.01em;}
+  .rival .rh2h .big.lead{color:var(--win);} .rival .rh2h .big.trail{color:var(--loss);}
+  .rival .rh2h .h2hlab{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.12em;font-size:9.5px;color:var(--ink-faint);}
+  .rival .rlast{font-size:12px;color:var(--ink-soft);}
+  .scout-note{margin-top:12px;font-size:12.5px;color:var(--ink-faint);line-height:1.55;}
+
+  .upcoming{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px;}
+  .upcard{background:var(--surface);border:1px dashed var(--line);border-radius:15px;padding:16px;display:flex;flex-direction:column;gap:6px;}
+  .upcard .uname{font-family:var(--f-display);text-transform:uppercase;font-weight:700;letter-spacing:.03em;font-size:15px;}
+  .upcard .umeta{font-size:12.5px;color:var(--ink-faint);display:flex;flex-wrap:wrap;gap:4px 8px;}
+  .upcard .ufield{margin-top:8px;font-family:var(--f-display);letter-spacing:.08em;text-transform:uppercase;font-size:10.5px;color:var(--court-2);display:inline-flex;align-items:center;gap:6px;}
+  .upcard .ufield .plus{font-family:var(--f-mono);font-size:15px;line-height:1;}
+
+  @media (max-width:860px){
+    .cols{grid-template-columns:1fr;} .stats{grid-template-columns:repeat(2,1fr);}
+    .hero-grid{grid-template-columns:1fr;} .badge{margin-top:2px;}
+  }
+  @media (max-width:520px){ .match{grid-template-columns:24px 1fr;} .mscore{grid-column:2;text-align:left;padding-left:0;} }
+  @media (prefers-reduced-motion:reduce){
+    .rise,.fchip{opacity:1!important;transform:none!important;transition:none!important;}
+    .badge .ring-fg{transition:none!important;} .hype-text{transition:none;}
+  }
+</style>
+
+<div class="wrap" id="wrap">
+<div class="shell">
+
+  <header class="masthead">
+    <div class="wordmark">
+      <span class="ball" aria-hidden="true"></span>
+      <div><b>Camilla&rsquo;s Season</b><br><small>Junior Tennis &middot; 2026</small></div>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch color theme">
+      <span id="themeIcon">&#9789;</span><span id="themeLbl">Dark</span>
+    </button>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="court" aria-hidden="true">
+      <svg viewBox="0 0 400 560" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#fff" stroke-width="2">
+        <rect x="42" y="26" width="316" height="508"/>
+        <line x1="42" y1="280" x2="358" y2="280"/>
+        <rect x="92" y="26" width="216" height="508"/>
+        <line x1="92" y1="150" x2="308" y2="150"/><line x1="92" y1="410" x2="308" y2="410"/>
+        <line x1="200" y1="150" x2="200" y2="410"/>
+        <line x1="200" y1="26" x2="200" y2="42"/><line x1="200" y1="518" x2="200" y2="534"/>
+      </svg>
+    </div>
+
+    <div class="hero-grid">
+      <div class="hero-left">
+        <p class="eyebrow rise"><span class="pindot"></span> San Antonio, Texas &middot; USTA Texas</p>
+        <h1 class="name rise d1">CAM<em>I</em>LLA</h1>
+        <div class="surname rise d1">&ldquo;Zoe&rdquo; &middot; Salmeron</div>
+        <div class="creds rise d2">
+          <span class="cred" data-field="division" data-default="Girls&rsquo; 12s &middot; Singles" data-placeholder="Add division">Girls&rsquo; 12s &middot; Singles</span>
+          <span class="cred gold"><span class="star">&#9733;</span> Champion &middot; Jul 26</span>
+          <span class="cred optic">9&ndash;1 in July</span>
+        </div>
+      </div>
+
+      <div class="badge rise d2" aria-label="Current World Tennis Number">
+        <svg viewBox="0 0 190 190" aria-hidden="true">
+          <defs><linearGradient id="ringgrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="var(--optic-bright)"/><stop offset="1" stop-color="var(--court-2)"/>
+          </linearGradient></defs>
+          <circle class="ring-bg" cx="95" cy="95" r="85"/>
+          <circle class="ring-fg" id="ringFg" cx="95" cy="95" r="85"/>
+        </svg>
+        <div class="inner">
+          <span class="rlabel" data-field="ratingType" data-default="WTN" data-placeholder="WTN">WTN</span>
+          <span class="rnum" data-field="rating" data-default="33.3" data-placeholder="Add rating">33.3</span>
+          <span class="rsub"><svg class="vchk" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 1.8 3-.2 1 2.8 2.6 1.5-.9 2.9.9 2.9-2.6 1.5-1 2.8-3-.2L12 22l-2.4-1.8-3 .2-1-2.8L3 16.3l.9-2.9L3 10.5l2.6-1.5 1-2.8 3 .2L12 2z" fill="currentColor"/><path d="M8.5 12.2l2.3 2.3 4.5-4.7" fill="none" stroke="#0a2f3a" stroke-width="2" stroke-linecap="round"/></svg> Verified</span>
+        </div>
+        <span class="trend">&#9660; from 33.4 &middot; improving</span>
+      </div>
+    </div>
+
+    <div class="form-strip" id="formStrip">
+      <span class="lab">Recent form</span>
+      <!-- chips injected -->
+      <span class="note">newest &rarr; oldest</span>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="block">
+    <div class="block-head"><h2>Season at a glance</h2><span class="rule"></span><span class="count" id="asof">through Jul 26</span></div>
+    <div class="stats">
+      <div class="stat gold rise">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v3a6 6 0 0 1-12 0V4zM6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3M9 15h6M8 20h8M10 16v4M14 16v4"/></svg></span>
+        <div class="v mono" data-count="1">0</div><div class="l">Titles</div><div class="sub">Jul 26 champion</div>
+      </div>
+      <div class="stat accent rise d1">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span>
+        <div class="v mono" data-count="9">0</div><div class="l">Matches won</div><div class="sub">logged in July</div>
+      </div>
+      <div class="stat rise d2">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></span>
+        <div class="v mono" data-count="1">0</div><div class="l">Matches lost</div><div class="sub">3-set TB vs Thurman</div>
+      </div>
+      <div class="stat accent rise d3">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-9"/></svg></span>
+        <div class="v mono" data-count="90" data-suffix="%">0</div><div class="l">Win rate</div><div class="sub">9 of 10 matches</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RATING + CHART ============ -->
+  <section class="block">
+    <div class="cols">
+      <div class="card rise">
+        <div class="ch"><span class="t">Rating &amp; Rank</span>
+          <span class="edit-hint"><svg viewBox="0 0 24 24"><path d="M4 20h4L18 10l-4-4L4 16v4z"/><path d="M14 6l4 4"/></svg> Tap to edit</span>
+        </div>
+        <div class="cb">
+          <div class="rate-lines">
+            <div class="rate-row"><span class="k">World Tennis Number</span><span class="val" data-field="wtn" data-default="33.3" data-placeholder="—">33.3</span></div>
+            <div class="rate-row"><span class="k">USTA Texas Ranking</span><span class="val" data-field="usta" data-placeholder="—">&mdash;</span></div>
+            <div class="rate-row"><span class="k">TennisRecruiting Stars</span><span class="val" data-field="trn" data-placeholder="—">&mdash;</span></div>
+          </div>
+          <p class="rate-note">World Tennis Number is the rating USTA uses &mdash; <strong>lower is stronger</strong>, so her 33.4&nbsp;&rarr;&nbsp;33.3 is the right direction. USTA/WTN doesn&rsquo;t offer a simple auto-feed, so drop new numbers in here (or send a fresh screenshot) and I&rsquo;ll keep it current.</p>
+          <a class="profile-link" id="ustaLink" href="#" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4L10 14"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            Official USTA profile
+          </a>
+        </div>
+      </div>
+
+      <div class="card rise d1">
+        <div class="ch"><span class="t">WTN trajectory</span><span class="edit-hint">lower = stronger</span></div>
+        <div class="cb">
+          <div class="chartwrap">
+            <svg class="chartsvg" id="wtnChart" viewBox="0 0 320 172" preserveAspectRatio="none" aria-label="World Tennis Number trend"></svg>
+          </div>
+          <div class="chart-cap"><span>Jul 4 &rarr; Jul 18</span><span><b>&#9660; 0.1 better</b> &middot; more points as she plays</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="block">
+    <div class="block-head"><h2>The season, match by match</h2><span class="rule"></span><span class="count">4 tournaments</span></div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <!-- ============ RIVALS ============ -->
+  <section class="block">
+    <div class="block-head"><h2>Rivals &amp; head-to-head</h2><span class="rule"></span><span class="count">from played matches</span></div>
+    <div class="rivals" id="rivals"></div>
+    <p class="scout-note">Head-to-heads pulled from her published WTN match results &mdash; players near her level she&rsquo;s already faced. <strong>Nearest rating</strong> and any <strong>rematch</strong> are flagged. Send me an upcoming draw and I&rsquo;ll add the whole field here with WTNs and H2H.</p>
+  </section>
+
+  <!-- ============ UPCOMING ============ -->
+  <section class="block">
+    <div class="block-head"><h2>Upcoming in Texas</h2><span class="rule"></span><span class="count">tap to fill</span></div>
+    <div class="upcoming">
+      <div class="upcard">
+        <div class="uname" data-field="up1_name" data-placeholder="Tournament name">Next Texas event</div>
+        <div class="umeta"><span data-field="up1_date" data-placeholder="Dates">Add dates</span><span>&middot;</span><span data-field="up1_city" data-placeholder="City / venue">Add city</span></div>
+        <div class="ufield"><span class="plus">+</span> Field &amp; seeds &mdash; share the draw</div>
+      </div>
+      <div class="upcard">
+        <div class="uname" data-field="up2_name" data-placeholder="Tournament name">Another event</div>
+        <div class="umeta"><span data-field="up2_date" data-placeholder="Dates">Add dates</span><span>&middot;</span><span data-field="up2_city" data-placeholder="City / venue">Add city</span></div>
+        <div class="ufield"><span class="plus">+</span> Field &amp; seeds &mdash; share the draw</div>
+      </div>
+    </div>
+    <p class="scout-note">Drop a tournament name here (or its USTA/WTN link) and I&rsquo;ll list who&rsquo;s entered, their World Tennis Numbers, the seeds, and how Camilla&rsquo;s matched up against any of them before.</p>
+  </section>
+
+  <!-- ============ NEXT UP ============ -->
+  <section class="block">
+    <div class="next rise">
+      <p class="kick">Next up</p>
+      <h3 data-field="nextName" data-placeholder="Name her next tournament">Her next tournament</h3>
+      <p class="when" id="nextWhen">Pick a date and the countdown begins.</p>
+      <div class="countdown" id="countdown" hidden>
+        <div class="cd"><div class="n mono" id="cdDays">0</div><div class="u">Days</div></div>
+        <div class="cd"><div class="n mono" id="cdHrs">0</div><div class="u">Hours</div></div>
+        <div class="cd"><div class="n mono" id="cdMin">0</div><div class="u">Min</div></div>
+      </div>
+      <div class="next-controls"><input class="date-input" type="date" id="nextDate" aria-label="Next tournament date"></div>
+      <div class="hype"><span class="spark" aria-hidden="true">&#9654;</span><span class="hype-text" id="hype">9&ndash;1 in July, the number&rsquo;s dropping &mdash; now we go get the next one.</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="love"><span class="heart" aria-hidden="true">&#9829;</span> Kept for Camilla by her family <span class="tag">&middot; go crush the next one</span></span>
+    <span class="tag">Private link &middot; results from worldtennisnumber.com</span>
+  </footer>
+
+</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var USTA_URL = "https://www.usta.com/en/home/play/player-search/profile.html#uaid=2019443754&tab=tournaments";
+  var lk=document.getElementById("ustaLink"); if(lk) lk.href=USTA_URL;
+
+  function get(k,d){ try{ var v=localStorage.getItem("camila."+k); return v===null?d:v; }catch(e){ return d; } }
+  function set(k,v){ try{ localStorage.setItem("camila."+k,v); }catch(e){} }
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  /* -------- recent form (newest -> oldest), real results -------- */
+  var FORM = [
+    {c:"title",t:"Jul 26 — Tournament Champion",x:"★"},
+    {c:"w",t:"Jul 18 — def. Z. Marrow",x:"W"},
+    {c:"w",t:"Jul 18 — def. B. Todryk",x:"W"},
+    {c:"w",t:"Jul 18 — def. A. Goenka",x:"W"},
+    {c:"l",t:"Jul 18 — lost to B. Thurman (3-set TB)",x:"L"},
+    {c:"w",t:"Jul 4 — def. R. Connell",x:"W"},
+    {c:"w",t:"Jul 4 — def. E. Paul",x:"W"}
+  ];
+  var fs=document.getElementById("formStrip"), noteEl=fs.querySelector(".note");
+  FORM.forEach(function(f,i){
+    var s=document.createElement("span"); s.className="fchip "+f.c; s.title=f.t; s.innerHTML=f.x;
+    s.style.transitionDelay=(0.25+i*0.06)+"s";
+    fs.insertBefore(s,noteEl);
+  });
+
+  /* -------- tournaments (real data; unknowns fillable) -------- */
+  var T = [
+    { id:"jul26", mo:"JUL", dy:"26", date:"Sun, Jul 26, 2026", name:"", namePH:"Name today's tournament",
+      venue:"San Antonio, TX", pill:'<span class="pill champ"><span aria-hidden="true">&#9733;</span> Champion &middot; 4&ndash;0</span>', title:true,
+      matches:[
+        {w:1,opp:"Final",score:"",editKey:"jul26_f",oppPH:"Final — opponent & score"},
+        {w:1,opp:"Semifinal",score:"",editKey:"jul26_sf",oppPH:"Semifinal — opponent & score"},
+        {w:1,opp:"Round 2",score:"",editKey:"jul26_r2",oppPH:"Round 2 — opponent & score"},
+        {w:1,opp:"Round 1",score:"",editKey:"jul26_r1",oppPH:"Round 1 — opponent & score"}
+      ],
+      note:'Champion &mdash; 4&ndash;0 on the day. Add each opponent above when you have the draw.' },
+
+    { id:"jul18", mo:"JUL", dy:"18", date:"Sat, Jul 18, 2026", name:"Metroplex — McKinney Area", namePH:"Tournament name",
+      venue:"Colorado Country Club, McKinney, TX", pill:'<span class="pill played">Semis run &middot; 3&ndash;1</span>', title:false,
+      matches:[
+        {w:0,opp:"B. Thurman",wtn:"37.3",score:"lost 3-set TB"},
+        {w:1,opp:"A. Goenka",wtn:"37.5",score:"4–2, 4–0"},
+        {w:1,opp:"B. Todryk",wtn:"34.8",score:"4–1, 4–0"},
+        {w:1,opp:"Z. Marrow",wtn:"36.4",score:"4–2, W"}
+      ],
+      note:'Singles, 12&ndash;18 Green/Yellow. One tight loss to Thurman in a match tie-break &mdash; three clean wins otherwise.' },
+
+    { id:"jul04", mo:"JUL", dy:"04", date:"Sat, Jul 4, 2026", name:"RacFit", namePH:"Tournament name",
+      venue:"Buda, TX 78610", pill:'<span class="pill played">Won both &middot; 2&ndash;0</span>', title:false,
+      matches:[
+        {w:1,opp:"E. Paul",wtn:"38.5",score:"4–1, 4–1"},
+        {w:1,opp:"R. Connell",wtn:"37.9",score:"4–0, 4–0"}
+      ],
+      note:'Singles, Boys&rsquo; &amp; Girls&rsquo; 12&ndash;18. Straight-sets sweep.' },
+
+    { id:"jun21", mo:"JUN", dy:"21", date:"Sun, Jun 21, 2026", name:"Blossom", namePH:"Tournament name",
+      venue:"NEISD Blossom Tennis Center, San Antonio, TX", pill:'<span class="pill pending">Results &mdash; tap to add</span>', title:false,
+      matches:[], note:'Send me this draw (or the WTN screenshot) and I&rsquo;ll fill in every match.' }
+  ];
+
+  var tl=document.getElementById("timeline");
+  T.forEach(function(t){
+    var card=document.createElement("div"); card.className="tcard rise"+(t.title?" title":"");
+    var mHTML="";
+    if(t.matches && t.matches.length){
+      mHTML='<div class="matches">'+t.matches.map(function(m){
+        var res=m.w? '<span class="mres w">W</span>':'<span class="mres l">L</span>';
+        var opp = m.editKey
+          ? '<span class="mopp" data-field="'+m.editKey+'" data-placeholder="'+esc(m.oppPH||"")+'">'+esc(m.opp)+'</span>'
+          : '<span class="mopp">'+esc(m.opp)+(m.wtn?'<span class="wtn">'+esc(m.wtn)+'</span>':'')+'</span>';
+        var sc = m.score? '<span class="mscore">'+esc(m.score)+'</span>':'<span class="mscore"></span>';
+        return '<div class="match">'+res+opp+sc+'</div>';
+      }).join("")+'</div>';
+    }
+    var noteHTML = t.note? '<div class="add-note">'+t.note+'</div>':'';
+    card.innerHTML=
+      '<div class="tdate"><span class="mo">'+t.mo+'</span><span class="dy mono">'+t.dy+'</span></div>'+
+      '<div class="tbody"><div class="ttop"><div>'+
+        '<div class="tname" data-field="'+t.id+'_name" data-default="'+esc(t.name)+'" data-placeholder="'+esc(t.namePH)+'">'+esc(t.name)+'</div>'+
+        '<div class="tmeta"><span data-field="'+t.id+'_venue" data-default="'+esc(t.venue)+'" data-placeholder="Add venue">'+esc(t.venue)+'</span><span>&middot;</span><span>'+t.date+'</span></div>'+
+      '</div>'+t.pill+'</div>'+ mHTML + noteHTML +'</div>';
+    tl.appendChild(card);
+  });
+
+  /* -------- editable fields -------- */
+  function render(el,val,ph){ if(val){ el.textContent=val; el.classList.remove("is-empty"); } else { el.textContent=ph; el.classList.add("is-empty"); } }
+  function wireField(el){
+    var key=el.getAttribute("data-field"), ph=el.getAttribute("data-placeholder")||"", def=el.getAttribute("data-default")||"";
+    var stored=get("f."+key,null);
+    var val = stored!==null ? stored : def;
+    render(el,val,ph);
+    el.setAttribute("contenteditable","true"); el.setAttribute("spellcheck","false"); el.setAttribute("tabindex","0"); el.setAttribute("role","textbox");
+    el.addEventListener("focus",function(){ if(el.classList.contains("is-empty")){ el.textContent=""; el.classList.remove("is-empty"); } });
+    el.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); el.blur(); } });
+    el.addEventListener("blur",function(){ var t=el.textContent.trim(); set("f."+key,t); render(el,t,ph); if(key==="rating"||key==="wtn") updateRing(); });
+  }
+  document.querySelectorAll("[data-field]").forEach(wireField);
+
+  /* -------- decorative rating ring (not a false gauge) -------- */
+  function updateRing(){
+    var fg=document.getElementById("ringFg"); if(!fg) return;
+    var el=document.querySelector('[data-field="rating"]');
+    var has = el && !el.classList.contains("is-empty") && el.textContent.trim();
+    var C=2*Math.PI*85;
+    fg.style.strokeDashoffset = (has? C*0.30 : C).toFixed(1); // ~70% arc when a rating exists
+  }
+  updateRing();
+
+  /* -------- count up -------- */
+  document.querySelectorAll("[data-count]").forEach(function(el){
+    var target=parseInt(el.getAttribute("data-count"),10)||0, suffix=el.getAttribute("data-suffix")||"";
+    if(reduce||target===0){ el.innerHTML=target+suffix; return; }
+    var start=null,dur=900;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1); var e=1-Math.pow(1-p,3);
+      el.innerHTML=Math.round(e*target)+(p===1?suffix:""); if(p<1)requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  });
+
+  /* -------- WTN trajectory chart (2 real points, y inverted so improvement rises) -------- */
+  (function(){
+    var svg=document.getElementById("wtnChart"); if(!svg) return;
+    var pts=[{lab:"Jul 4",wtn:33.4},{lab:"Jul 18",wtn:33.3}];
+    var W=320,H=172,padX=34,padY=26, plotW=W-padX*2, plotH=H-padY*2;
+    var lo=33.2, hi=33.5; // tight axis; lower wtn plotted higher
+    function X(i){ return padX + (pts.length===1?plotW/2:(i/(pts.length-1))*plotW); }
+    function Y(w){ return padY + ((w-lo)/(hi-lo))*plotH; } // higher wtn -> lower on chart
+    var ns="http://www.w3.org/2000/svg";
+    function line(x1,y1,x2,y2,cls){ var l=document.createElementNS(ns,"line"); l.setAttribute("x1",x1);l.setAttribute("y1",y1);l.setAttribute("x2",x2);l.setAttribute("y2",y2);l.setAttribute("class",cls);return l;}
+    // gridlines
+    [0,.5,1].forEach(function(f){ var y=padY+f*plotH; var g=line(padX,y,W-padX,y); g.setAttribute("stroke","var(--line-2)"); g.setAttribute("stroke-width","1"); svg.appendChild(g); });
+    // area + line
+    var d="M"+X(0)+" "+Y(pts[0].wtn); pts.forEach(function(p,i){ if(i) d+=" L"+X(i)+" "+Y(p.wtn); });
+    var area=document.createElementNS(ns,"path"); area.setAttribute("d",d+" L"+X(pts.length-1)+" "+(H-padY)+" L"+X(0)+" "+(H-padY)+" Z");
+    area.setAttribute("fill","var(--win-soft)"); area.setAttribute("stroke","none"); svg.appendChild(area);
+    var path=document.createElementNS(ns,"path"); path.setAttribute("d",d); path.setAttribute("fill","none");
+    path.setAttribute("stroke","var(--win)"); path.setAttribute("stroke-width","2.5"); path.setAttribute("stroke-linecap","round");
+    svg.appendChild(path);
+    if(!reduce){ var len=path.getTotalLength?path.getTotalLength():400; path.style.strokeDasharray=len; path.style.strokeDashoffset=len;
+      path.style.transition="stroke-dashoffset 1.1s ease .3s"; requestAnimationFrame(function(){ requestAnimationFrame(function(){ path.style.strokeDashoffset=0; }); }); }
+    // points + labels
+    pts.forEach(function(p,i){
+      var c=document.createElementNS(ns,"circle"); c.setAttribute("cx",X(i)); c.setAttribute("cy",Y(p.wtn)); c.setAttribute("r",i===pts.length-1?5:3.5);
+      c.setAttribute("fill",i===pts.length-1?"var(--win)":"var(--surface)"); c.setAttribute("stroke","var(--win)"); c.setAttribute("stroke-width","2"); svg.appendChild(c);
+      var tv=document.createElementNS(ns,"text"); tv.setAttribute("x",X(i)); tv.setAttribute("y",Y(p.wtn)-11); tv.setAttribute("text-anchor","middle");
+      tv.setAttribute("font-family","var(--f-mono)"); tv.setAttribute("font-size","12"); tv.setAttribute("font-weight","700"); tv.setAttribute("fill","var(--ink)"); tv.textContent=p.wtn.toFixed(1); svg.appendChild(tv);
+      var tl2=document.createElementNS(ns,"text"); tl2.setAttribute("x",X(i)); tl2.setAttribute("y",H-8); tl2.setAttribute("text-anchor","middle");
+      tl2.setAttribute("font-family","var(--f-display)"); tl2.setAttribute("font-size","10"); tl2.setAttribute("letter-spacing","1"); tl2.setAttribute("fill","var(--ink-faint)"); tl2.textContent=p.lab.toUpperCase(); svg.appendChild(tl2);
+    });
+  })();
+
+  /* -------- rivals & head-to-head (from real played matches) -------- */
+  var RIVALS=[
+    {opp:"B. Todryk", wtn:"34.8", h2h:"1–0", win:true,  last:"W 4–1, 4–0 · Jul 18", tag:"near"},
+    {opp:"B. Thurman",wtn:"37.3", h2h:"0–1", win:false, last:"L in a 3-set tie-break · Jul 18", tag:"rematch"},
+    {opp:"Z. Marrow", wtn:"36.4", h2h:"1–0", win:true,  last:"W 4–2 · Jul 18"},
+    {opp:"A. Goenka", wtn:"37.5", h2h:"1–0", win:true,  last:"W 4–2, 4–0 · Jul 18"},
+    {opp:"R. Connell",wtn:"37.9", h2h:"1–0", win:true,  last:"W 4–0, 4–0 · Jul 4"},
+    {opp:"E. Paul",   wtn:"38.5", h2h:"1–0", win:true,  last:"W 4–1, 4–1 · Jul 4"}
+  ];
+  var rc=document.getElementById("rivals");
+  if(rc){ RIVALS.forEach(function(r,i){
+    var el=document.createElement("div"); el.className="rival rise"; el.style.transitionDelay=(i*0.05)+"s";
+    var tag = r.tag==="near" ? '<span class="rtag near">Nearest rating</span>'
+            : r.tag==="rematch" ? '<span class="rtag rematch">Rematch watch</span>' : '';
+    el.innerHTML = tag +
+      '<div class="rtop"><span class="ropp">'+esc(r.opp)+'</span><span class="rwtn">WTN '+esc(r.wtn)+'</span></div>'+
+      '<div class="rh2h"><span class="big '+(r.win?'lead':'trail')+'">'+r.h2h+'</span><span class="h2hlab">H2H</span></div>'+
+      '<div class="rlast">'+esc(r.last)+'</div>';
+    rc.appendChild(el);
+  }); }
+
+  /* -------- reveal -------- */
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.getElementById("wrap").classList.add("revealed"); }); });
+
+  /* -------- hype rotator -------- */
+  var lines=["9–1 in July, the number’s dropping — now we go get the next one.",
+    "Champions are built one point at a time.","One loss, in a battle. Everything else, a win.",
+    "WTN 33.4 → 33.3 — the arrow’s pointing the right way.","San Antonio’s finest. Next trophy loading.",
+    "She showed up, she competed, she won the day."];
+  var hype=document.getElementById("hype"),hi=0;
+  if(hype&&!reduce){ setInterval(function(){ hype.style.opacity=0;
+    setTimeout(function(){ hi=(hi+1)%lines.length; hype.textContent=lines[hi]; hype.style.opacity=1; },400); },4600); }
+
+  /* -------- theme -------- */
+  var root=document.documentElement,tBtn=document.getElementById("themeBtn"),tIcon=document.getElementById("themeIcon"),tLbl=document.getElementById("themeLbl");
+  function sysDark(){ return window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches; }
+  function applyTheme(t){ if(t==="light"||t==="dark")root.setAttribute("data-theme",t); else root.removeAttribute("data-theme");
+    var dark=t==="dark"||(t!=="light"&&sysDark()); tIcon.innerHTML=dark?"&#9788;":"&#9789;"; tLbl.textContent=dark?"Light":"Dark"; }
+  applyTheme(get("theme","auto"));
+  tBtn.addEventListener("click",function(){ var cur=root.getAttribute("data-theme");
+    var next=(cur==="dark")?"light":(cur==="light"?"dark":(sysDark()?"light":"dark")); set("theme",next); applyTheme(next); });
+
+  /* -------- countdown -------- */
+  var dateInput=document.getElementById("nextDate"),cd=document.getElementById("countdown"),when=document.getElementById("nextWhen"),
+      dD=document.getElementById("cdDays"),dH=document.getElementById("cdHrs"),dM=document.getElementById("cdMin");
+  var savedDate=get("nextDate",""); if(savedDate)dateInput.value=savedDate;
+  function fmt(d){ try{ return new Date(d+"T00:00:00").toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"});}catch(e){return d;} }
+  function tick(){ var v=dateInput.value;
+    if(!v){ cd.hidden=true; when.textContent="Pick a date and the countdown begins."; return; }
+    var target=new Date(v+"T08:00:00").getTime(),now=Date.now(),diff=target-now;
+    if(diff<=0){ cd.hidden=true; when.innerHTML="It’s tournament day &mdash; go get it. 🎾"; return; }
+    cd.hidden=false; when.textContent=fmt(v);
+    dD.textContent=Math.floor(diff/86400000); dH.textContent=Math.floor(diff%86400000/3600000); dM.textContent=Math.floor(diff%3600000/60000); }
+  dateInput.addEventListener("change",function(){ set("nextDate",dateInput.value); tick(); });
+  tick(); setInterval(tick,30000);
+})();
+</script>
+
+</body>
+</html>
