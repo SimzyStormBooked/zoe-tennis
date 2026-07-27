@@ -241,6 +241,12 @@
   .rival .rlast{font-size:12px;color:var(--ink-soft);}
   .scout-note{margin-top:12px;font-size:12.5px;color:var(--ink-faint);line-height:1.55;}
 
+  /* clickable WTN → player lookup */
+  .wtn-link{color:var(--court-2);text-decoration:none;border-bottom:1px dotted currentColor;cursor:pointer;transition:color .15s;}
+  .wtn-link:hover{color:var(--court);border-bottom-style:solid;}
+  .wtn-link:focus-visible{outline:2px solid var(--court-2);outline-offset:2px;border-radius:3px;}
+  .mopp .wtn{color:var(--ink-faint);} .mopp .wtn .wtn-link{color:var(--court-2);}
+
   /* clickable rival cards */
   .rival{cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;}
   .rival:hover{border-color:var(--court-2);transform:translateY(-2px);}
@@ -414,7 +420,7 @@
   <section class="block">
     <div class="block-head"><h2>Rivals &amp; head-to-head</h2><span class="rule"></span><span class="count">from played matches</span></div>
     <div class="rivals" id="rivals"></div>
-    <p class="scout-note">Head-to-heads pulled from her published WTN match results &mdash; players near her level she&rsquo;s already faced. <strong>Nearest rating</strong> and any <strong>rematch</strong> are flagged. Send me an upcoming draw and I&rsquo;ll add the whole field here with WTNs and H2H.</p>
+    <p class="scout-note">Head-to-heads pulled from her published WTN match results &mdash; players near her level she&rsquo;s already faced. <strong>Nearest rating</strong> and any <strong>rematch</strong> are flagged. <strong>Tap any WTN</strong> to look that player up on World Tennis Number. Send me an upcoming draw and I&rsquo;ll add the whole field here with WTNs and H2H.</p>
   </section>
 
   <!-- ============ RIVAL WATCH ============ -->
@@ -477,6 +483,12 @@
   function set(k,v){ try{ localStorage.setItem("camila."+k,v); }catch(e){} }
   function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
+  /* -------- WTN profile links (default: player search; swap in exact bio URLs when we have them) -------- */
+  var WTN_SEARCH="https://worldtennisnumber.com/eng/player-search";
+  var OPP_URL={ "B. Todryk":"", "B. Thurman":"", "Z. Marrow":"", "A. Goenka":"", "R. Connell":"", "E. Paul":"" };
+  function oppUrl(name){ var u=OPP_URL[name]; return (u&&u.length)?u:WTN_SEARCH; }
+  function wtnLink(name,wtn){ return '<a class="wtn-link" href="'+oppUrl(name)+'" target="_blank" rel="noopener noreferrer" title="Look up '+esc(name)+' on World Tennis Number">'+esc(wtn)+'</a>'; }
+
   /* -------- recent form (newest -> oldest), real results -------- */
   var FORM = [
     {c:"title",t:"Jul 26 — Tournament Champion",x:"★"},
@@ -538,7 +550,7 @@
         var res=m.w? '<span class="mres w">W</span>':'<span class="mres l">L</span>';
         var opp = m.editKey
           ? '<span class="mopp" data-field="'+m.editKey+'" data-placeholder="'+esc(m.oppPH||"")+'">'+esc(m.opp)+'</span>'
-          : '<span class="mopp">'+esc(m.opp)+(m.wtn?'<span class="wtn">'+esc(m.wtn)+'</span>':'')+'</span>';
+          : '<span class="mopp">'+esc(m.opp)+(m.wtn?' <span class="wtn">'+wtnLink(m.opp,m.wtn)+'</span>':'')+'</span>';
         var sc = m.score? '<span class="mscore">'+esc(m.score)+'</span>':'<span class="mscore"></span>';
         return '<div class="match">'+res+opp+sc+'</div>';
       }).join("")+'</div>';
@@ -636,7 +648,7 @@
     var tag = r.tag==="near" ? '<span class="rtag near">Nearest rating</span>'
             : r.tag==="rematch" ? '<span class="rtag rematch">Rematch watch</span>' : '';
     el.innerHTML = tag +
-      '<div class="rtop"><span class="ropp">'+esc(r.opp)+'</span><span class="rwtn">WTN '+esc(r.wtn)+'</span></div>'+
+      '<div class="rtop"><span class="ropp">'+esc(r.opp)+'</span><span class="rwtn">WTN '+wtnLink(r.opp,r.wtn)+'</span></div>'+
       '<div class="rh2h"><span class="big '+(r.win?'lead':'trail')+'">'+r.h2h+'</span><span class="h2hlab">H2H</span></div>'+
       '<div class="rlast">'+esc(r.last)+'</div>';
     el.addEventListener("click",function(){ selectWatch(i); });
@@ -661,10 +673,10 @@
     rivalEls.forEach(function(e,idx){ e.classList.toggle("sel",idx===i); });
     if(watchHint) watchHint.textContent="watching "+r.opp;
     watchEl.innerHTML =
-      '<div class="wtop"><div class="wname">'+esc(r.opp)+'<span class="sub">World Tennis Number '+esc(r.wtn)+'</span></div>'+status+'</div>'+
+      '<div class="wtop"><div class="wname">'+esc(r.opp)+'<span class="sub">World Tennis Number '+wtnLink(r.opp,r.wtn)+'</span></div>'+status+'</div>'+
       '<div class="wbody">'+
         '<div class="wstat"><span class="k">Head-to-head</span><span class="v" style="color:'+(r.win?'var(--win)':'var(--loss)')+'">'+r.h2h+'</span></div>'+
-        '<div class="wstat"><span class="k">Their WTN</span><span class="v">'+esc(r.wtn)+'</span></div>'+
+        '<div class="wstat"><span class="k">Their WTN</span><span class="v">'+wtnLink(r.opp,r.wtn)+'</span></div>'+
         '<div class="wstat"><span class="k">Camilla&rsquo;s WTN</span><span class="v" style="color:var(--court)">'+CAM_WTN.toFixed(1)+'</span></div>'+
         '<div class="wstat"><span class="k">Last meeting</span><span class="v" style="font-size:13.5px;font-family:var(--f-body);font-weight:600">'+esc(r.last)+'</span></div>'+
       '</div>'+
