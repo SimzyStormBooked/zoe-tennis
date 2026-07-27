@@ -280,6 +280,39 @@
   .upcard .ufield{margin-top:8px;font-family:var(--f-display);letter-spacing:.08em;text-transform:uppercase;font-size:10.5px;color:var(--court-2);display:inline-flex;align-items:center;gap:6px;}
   .upcard .ufield .plus{font-family:var(--f-mono);font-size:15px;line-height:1;}
 
+  /* highlights gallery */
+  .gallery-controls{display:flex;gap:6px;}
+  .gfilter{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:10.5px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);cursor:pointer;transition:.15s;}
+  .gfilter.on,.gfilter:hover{border-color:var(--court-2);color:var(--court-2);}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:10px;}
+  .gitem{position:relative;border-radius:13px;overflow:hidden;aspect-ratio:4/3;background:var(--surface-3);cursor:pointer;border:1px solid var(--line);box-shadow:var(--shadow-s);}
+  .gitem img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s cubic-bezier(.2,.7,.2,1);}
+  .gitem:hover img{transform:scale(1.06);}
+  .gitem:focus-visible{outline:2px solid var(--court-2);outline-offset:2px;}
+  .gitem .cap{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;font-size:11px;color:#fff;line-height:1.3;background:linear-gradient(transparent,rgba(0,0,0,.72));}
+  .gitem .cap b{color:var(--optic-bright);}
+  .gitem .badge-v{position:absolute;top:8px;left:8px;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.08em;font-size:9.5px;color:#fff;background:rgba(0,0,0,.55);padding:4px 8px;border-radius:999px;z-index:1;}
+  .gitem .play{position:absolute;inset:0;margin:auto;width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid #fff;}
+  .gitem .play::after{content:"";position:absolute;top:50%;left:54%;transform:translate(-50%,-50%);border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;}
+  .gempty{border:1.5px dashed var(--line);border-radius:18px;padding:clamp(28px,5vw,44px) 22px;text-align:center;background:var(--surface-2);}
+  .gempty .gicon{font-size:34px;line-height:1;}
+  .gempty .gtitle{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.12em;font-size:15px;color:var(--ink-soft);margin-top:10px;}
+  .gempty .gsub{max-width:520px;margin:9px auto 0;font-size:13px;color:var(--ink-faint);line-height:1.6;}
+
+  /* lightbox */
+  .lightbox{position:fixed;inset:0;background:rgba(3,10,12,.93);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
+  .lightbox.open{display:flex;}
+  .lb-stage{display:flex;align-items:center;justify-content:center;max-width:96vw;}
+  .lb-stage img,.lb-stage video{max-width:min(1000px,92vw);max-height:82vh;width:auto;height:auto;border-radius:10px;background:#000;}
+  .lb-stage iframe{width:min(960px,92vw);aspect-ratio:16/9;height:auto;border:0;border-radius:10px;background:#000;}
+  .lb-btn{position:absolute;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;cursor:pointer;display:grid;place-items:center;transition:.15s;}
+  .lb-btn:hover{background:rgba(255,255,255,.22);} .lb-btn:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  .lb-close{top:18px;right:18px;width:44px;height:44px;font-size:24px;line-height:1;}
+  .lb-prev,.lb-next{top:50%;transform:translateY(-50%);width:48px;height:48px;font-size:28px;line-height:1;}
+  .lb-prev{left:14px;} .lb-next{right:14px;}
+  .lb-cap{position:absolute;bottom:20px;left:0;right:0;text-align:center;color:#fff;font-size:13px;padding:0 20px;}
+  .lb-cap b{color:var(--optic-bright);} .lb-cap .cr{color:rgba(255,255,255,.6);margin-left:6px;}
+
   @media (max-width:860px){
     .cols{grid-template-columns:1fr;} .stats{grid-template-columns:repeat(2,1fr);}
     .hero-grid{grid-template-columns:1fr;} .badge{margin-top:2px;}
@@ -377,6 +410,18 @@
     </div>
   </section>
 
+  <!-- ============ HIGHLIGHTS / MEDIA ============ -->
+  <section class="block">
+    <div class="block-head"><h2>Highlights</h2><span class="rule"></span>
+      <div class="gallery-controls" id="galControls" hidden>
+        <button class="gfilter on" type="button" data-f="all">All</button>
+        <button class="gfilter" type="button" data-f="photo">Photos</button>
+        <button class="gfilter" type="button" data-f="video">Video</button>
+      </div>
+    </div>
+    <div id="gallery"></div>
+  </section>
+
   <!-- ============ RATING + CHART ============ -->
   <section class="block">
     <div class="cols">
@@ -468,6 +513,14 @@
     <span class="love"><span class="heart" aria-hidden="true">&#9829;</span> Kept for Camilla by her family <span class="tag">&middot; go crush the next one</span></span>
     <span class="tag">Private link &middot; results from worldtennisnumber.com</span>
   </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+    <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="Close">&times;</button>
+    <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="Previous">&#8249;</button>
+    <div class="lb-stage" id="lbStage"></div>
+    <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="Next">&#8250;</button>
+    <div class="lb-cap" id="lbCap"></div>
+  </div>
 
 </div>
 </div>
@@ -688,6 +741,70 @@
     for(var k=0;k<RIVALS.length;k++){ if(RIVALS[k].tag==="rematch") return k; } return 0; })();
   renderWatch(defIdx);
 
+  /* -------- highlights gallery + lightbox -------- */
+  var MEDIA=[
+    // Photos/video drop in here. Examples:
+    // {type:"photo", src:"media/zoe-final.jpg", caption:"Championship point", event:"Jul 26", credit:"Team photographer"},
+    // {type:"video", youtube:"YouTubeID", poster:"media/thumb.jpg", caption:"Match point", event:"Jul 26"}
+  ];
+  var gal=document.getElementById("gallery"), galControls=document.getElementById("galControls");
+  var lb=document.getElementById("lightbox"), lbStage=document.getElementById("lbStage"), lbCap=document.getElementById("lbCap");
+  var galFilter="all", lbIdx=0, lbList=[];
+  function galFiltered(){ return MEDIA.filter(function(m){ return galFilter==="all"||m.type===galFilter; }); }
+  function renderGallery(){
+    if(!gal) return;
+    if(!MEDIA.length){
+      if(galControls) galControls.hidden=true;
+      gal.className="";
+      gal.innerHTML='<div class="gempty"><div class="gicon" aria-hidden="true">&#128248;</div>'+
+        '<div class="gtitle">Her highlights land here</div>'+
+        '<p class="gsub">Photos and video from your tournament photographer, tagged to each event. Send the best shots (or an unlisted video link) and they show up right here — click any one to enlarge and swipe through the set.</p></div>';
+      return;
+    }
+    if(galControls) galControls.hidden=false;
+    var list=galFiltered(); gal.className="gallery";
+    gal.innerHTML=list.map(function(m,i){
+      var isV=m.type==="video", thumb=m.poster||m.thumb||m.src||"";
+      return '<div class="gitem" data-i="'+i+'" role="button" tabindex="0" aria-label="'+esc(m.caption||"View media")+'">'+
+        (thumb?'<img src="'+esc(thumb)+'" alt="'+esc(m.caption||"")+'" loading="lazy">':'')+
+        (isV?'<span class="badge-v">&#9654; Video</span><span class="play" aria-hidden="true"></span>':'')+
+        ((m.caption||m.event)?'<div class="cap">'+(m.event?'<b>'+esc(m.event)+'</b> ':'')+esc(m.caption||"")+'</div>':'')+
+      '</div>';
+    }).join("");
+    Array.prototype.forEach.call(gal.querySelectorAll(".gitem"),function(el){
+      el.addEventListener("click",function(){ openLb(parseInt(el.getAttribute("data-i"),10)); });
+      el.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openLb(parseInt(el.getAttribute("data-i"),10)); } });
+    });
+  }
+  function openLb(i){
+    lbList=galFiltered(); if(!lbList.length||!lb) return; lbIdx=(i+lbList.length)%lbList.length;
+    var m=lbList[lbIdx];
+    if(m.type==="video"){
+      if(m.youtube) lbStage.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(m.youtube)+'?rel=0" allow="autoplay; fullscreen; encrypted-media" allowfullscreen title="'+esc(m.caption||"Video")+'"></iframe>';
+      else if(m.src) lbStage.innerHTML='<video src="'+esc(m.src)+'" controls playsinline'+(m.poster?' poster="'+esc(m.poster)+'"':'')+'></video>';
+      else lbStage.innerHTML="";
+    } else {
+      lbStage.innerHTML='<img src="'+esc(m.src||m.poster||"")+'" alt="'+esc(m.caption||"")+'">';
+    }
+    lbCap.innerHTML=(m.event?'<b>'+esc(m.event)+'</b> &middot; ':'')+esc(m.caption||"")+(m.credit?' <span class="cr">&#128247; '+esc(m.credit)+'</span>':'');
+    lb.classList.add("open"); document.body.style.overflow="hidden";
+  }
+  function closeLb(){ if(!lb) return; lb.classList.remove("open"); lbStage.innerHTML=""; document.body.style.overflow=""; }
+  function navLb(d){ openLb(lbIdx+d); }
+  if(lb){
+    document.getElementById("lbClose").addEventListener("click",closeLb);
+    document.getElementById("lbPrev").addEventListener("click",function(){ navLb(-1); });
+    document.getElementById("lbNext").addEventListener("click",function(){ navLb(1); });
+    lb.addEventListener("click",function(e){ if(e.target===lb) closeLb(); });
+    document.addEventListener("keydown",function(e){ if(!lb.classList.contains("open"))return;
+      if(e.key==="Escape")closeLb(); else if(e.key==="ArrowLeft")navLb(-1); else if(e.key==="ArrowRight")navLb(1); });
+  }
+  if(galControls){ Array.prototype.forEach.call(galControls.querySelectorAll(".gfilter"),function(b){
+    b.addEventListener("click",function(){ galFilter=b.getAttribute("data-f");
+      Array.prototype.forEach.call(galControls.querySelectorAll(".gfilter"),function(x){ x.classList.toggle("on",x===b); });
+      renderGallery(); }); }); }
+  renderGallery();
+
   /* -------- reveal -------- */
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.getElementById("wrap").classList.add("revealed"); }); });
 
@@ -724,6 +841,7 @@
   tick(); setInterval(tick,30000);
 })();
 </script>
+
 
 </body>
 </html>
