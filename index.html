@@ -313,6 +313,39 @@
   .lb-cap{position:absolute;bottom:20px;left:0;right:0;text-align:center;color:#fff;font-size:13px;padding:0 20px;}
   .lb-cap b{color:var(--optic-bright);} .lb-cap .cr{color:rgba(255,255,255,.6);margin-left:6px;}
 
+  /* trophy case */
+  .trophies{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+  .trophy{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 16px 15px;box-shadow:var(--shadow-s);display:flex;flex-direction:column;gap:5px;overflow:hidden;}
+  .trophy::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--court);}
+  .trophy.gold-tr::before{background:linear-gradient(var(--gold-bright),var(--gold));}
+  .trophy.locked{opacity:.6;border-style:dashed;background:var(--surface-2);}
+  .trophy.locked::before{background:var(--line);}
+  .trophy .ti{font-size:26px;line-height:1;}
+  .trophy .tt{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.05em;font-weight:700;font-size:13px;line-height:1.15;}
+  .trophy .ts{font-size:11.5px;color:var(--ink-faint);line-height:1.4;}
+  .trophy .earned{position:absolute;top:11px;right:12px;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:8.5px;color:var(--gold);}
+  .trophy.locked .earned{color:var(--ink-faint);}
+
+  /* team ladder */
+  .team-wrap{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;}
+  .team-head{padding:16px 20px;border-bottom:1px solid var(--line-2);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;}
+  .team-head .tn{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.06em;font-weight:700;font-size:15px;}
+  .team-head .trank{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--court-2);}
+  .ladder{display:flex;flex-direction:column;}
+  .lrow{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;padding:12px 20px;border-top:1px solid var(--line-2);}
+  .lrow:first-child{border-top:none;}
+  .lrow.me{background:var(--court-soft);}
+  .lrow .pos{font-family:var(--f-mono);font-weight:700;font-size:15px;color:var(--ink-faint);}
+  .lrow.me .pos{color:var(--court);}
+  .lrow .pname{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.03em;font-weight:700;font-size:14px;}
+  .lrow.me .pname .metag{font-family:var(--f-body);text-transform:none;font-weight:400;font-size:10.5px;color:var(--court-2);margin-left:8px;letter-spacing:.03em;}
+  .lrow .pwtn{font-family:var(--f-mono);font-weight:700;font-size:14px;}
+  .team-add{padding:14px 20px;border-top:1px solid var(--line-2);background:var(--surface-2);}
+  .team-add .lbl{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--ink-faint);display:block;margin-bottom:10px;}
+  .tslot{display:grid;grid-template-columns:1fr 88px;gap:10px;margin-bottom:8px;}
+  .tslot [data-field]{border:1px dashed var(--line);border-radius:9px;padding:8px 10px;font-size:13px;background:var(--surface);}
+  .tslot [data-field].is-empty{color:var(--ink-faint);font-style:italic;}
+
   @media (max-width:860px){
     .cols{grid-template-columns:1fr;} .stats{grid-template-columns:repeat(2,1fr);}
     .hero-grid{grid-template-columns:1fr;} .badge{margin-top:2px;}
@@ -422,6 +455,12 @@
     <div id="gallery"></div>
   </section>
 
+  <!-- ============ TROPHY CASE ============ -->
+  <section class="block">
+    <div class="block-head"><h2>Trophy case</h2><span class="rule"></span><span class="count" id="trophyCount"></span></div>
+    <div class="trophies" id="trophies"></div>
+  </section>
+
   <!-- ============ RATING + CHART ============ -->
   <section class="block">
     <div class="cols">
@@ -473,6 +512,27 @@
     <div class="block-head"><h2>Rival Watch</h2><span class="rule"></span><span class="count" id="watchHint">tap a rival to watch</span></div>
     <div class="watch" id="watch"></div>
     <p class="scout-note">Tap any rival above to spotlight her here &mdash; head-to-head, the WTN gap, and a place to log her latest results as you spot them (public tournament data only). Set on <strong>B. Thurman</strong> by default: the one to avenge. &#127919;</p>
+  </section>
+
+  <!-- ============ TEAM LADDER ============ -->
+  <section class="block">
+    <div class="block-head"><h2>Team Ladder</h2><span class="rule"></span><span class="count">where she stacks up</span></div>
+    <div class="team-wrap">
+      <div class="team-head">
+        <span class="tn" data-field="team_name" data-placeholder="Name her team / academy">Her Academy</span>
+        <span class="trank" id="teamRank"></span>
+      </div>
+      <div class="ladder" id="ladder"></div>
+      <div class="team-add">
+        <span class="lbl">Add teammates (name + WTN) — the ladder ranks them automatically</span>
+        <div class="tslot"><div data-field="team1_name" data-placeholder="Teammate name"></div><div data-field="team1_wtn" data-placeholder="WTN"></div></div>
+        <div class="tslot"><div data-field="team2_name" data-placeholder="Teammate name"></div><div data-field="team2_wtn" data-placeholder="WTN"></div></div>
+        <div class="tslot"><div data-field="team3_name" data-placeholder="Teammate name"></div><div data-field="team3_wtn" data-placeholder="WTN"></div></div>
+        <div class="tslot"><div data-field="team4_name" data-placeholder="Teammate name"></div><div data-field="team4_wtn" data-placeholder="WTN"></div></div>
+        <div class="tslot"><div data-field="team5_name" data-placeholder="Teammate name"></div><div data-field="team5_wtn" data-placeholder="WTN"></div></div>
+      </div>
+    </div>
+    <p class="scout-note">Ranks Camilla against her team by World Tennis Number (lower = stronger). Add her teammates and it sorts instantly — and it's exactly how an academy would want its whole roster to look. &#127934;</p>
   </section>
 
   <!-- ============ UPCOMING ============ -->
@@ -805,6 +865,56 @@
       renderGallery(); }); }); }
   renderGallery();
 
+  /* -------- trophy case -------- */
+  var TROPHIES=[
+    {i:"\uD83C\uDFC6",t:"Tournament Champion",s:"Won the title \u00b7 Jul 26",earned:true,gold:true},
+    {i:"\uD83C\uDFAF",t:"4\u20130 Sweep",s:"Four wins, none dropped \u00b7 Jul 26",earned:true},
+    {i:"\uD83D\uDD25",t:"9\u20131 July",s:"Nine match wins in a month",earned:true},
+    {i:"\uD83D\uDCC9",t:"WTN Personal Best",s:"33.3 and dropping",earned:true},
+    {i:"\u2705",t:"Event Sweep",s:"Won every match \u00b7 RacFit",earned:true},
+    {i:"\uD83D\uDCAA",t:"Avenge Thurman",s:"Beat B. Thurman in the rematch",earned:false},
+    {i:"\u2B50",t:"Break Sub-33 WTN",s:"Push the number under 33.0",earned:false}
+  ];
+  var tcEl=document.getElementById("trophies");
+  if(tcEl){ var earnedN=0;
+    tcEl.innerHTML=TROPHIES.map(function(b){ if(b.earned)earnedN++;
+      return '<div class="trophy'+(b.earned?(b.gold?' gold-tr':''):' locked')+'">'+
+        '<span class="earned">'+(b.earned?'Earned':'Locked')+'</span>'+
+        '<span class="ti">'+b.i+'</span>'+
+        '<span class="tt">'+esc(b.t)+'</span>'+
+        '<span class="ts">'+esc(b.s)+'</span></div>';
+    }).join("");
+    var tcc=document.getElementById("trophyCount"); if(tcc) tcc.textContent=earnedN+" earned";
+  }
+
+  /* -------- team ladder -------- */
+  function camWtn(){ var v=parseFloat((get("f.wtn","33.3")||"33.3").replace(/[^\d.]/g,"")); return isNaN(v)?33.3:v; }
+  function renderLadder(){
+    var ladderEl=document.getElementById("ladder"), rankEl=document.getElementById("teamRank"); if(!ladderEl) return;
+    var players=[{name:"Camilla",wtn:camWtn(),me:true}];
+    for(var n=1;n<=5;n++){
+      var nm=(get("f.team"+n+"_name","")||"").trim();
+      var w=parseFloat((get("f.team"+n+"_wtn","")||"").replace(/[^\d.]/g,""));
+      if(nm && !isNaN(w)) players.push({name:nm,wtn:w,me:false});
+    }
+    players.sort(function(a,b){ return a.wtn-b.wtn; });
+    var meRank=1; players.forEach(function(p,i){ if(p.me) meRank=i+1; });
+    ladderEl.innerHTML=players.map(function(p,i){
+      return '<div class="lrow'+(p.me?' me':'')+'"><span class="pos">'+(i+1)+'</span>'+
+        '<span class="pname">'+esc(p.name)+(p.me?'<span class="metag">our girl</span>':'')+'</span>'+
+        '<span class="pwtn">'+p.wtn.toFixed(1)+'</span></div>';
+    }).join("");
+    if(rankEl){ rankEl.textContent = players.length>1 ? ("#"+meRank+" of "+players.length+" on the team") : "Add teammates below"; }
+  }
+  ["team1","team2","team3","team4","team5"].forEach(function(pre){
+    ["_name","_wtn"].forEach(function(sfx){
+      var el=document.querySelector('[data-field="'+pre+sfx+'"]');
+      if(el) el.addEventListener("blur", function(){ setTimeout(renderLadder,0); });
+    });
+  });
+  var wtnField=document.querySelector('[data-field="wtn"]'); if(wtnField) wtnField.addEventListener("blur", function(){ setTimeout(renderLadder,0); });
+  renderLadder();
+
   /* -------- reveal -------- */
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.getElementById("wrap").classList.add("revealed"); }); });
 
@@ -841,6 +951,7 @@
   tick(); setInterval(tick,30000);
 })();
 </script>
+
 
 
 </body>
