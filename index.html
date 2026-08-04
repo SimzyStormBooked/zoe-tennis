@@ -504,14 +504,7 @@
   <section class="block">
     <div class="block-head"><h2>Rivals &amp; head-to-head</h2><span class="rule"></span><span class="count">from played matches</span></div>
     <div class="rivals" id="rivals"></div>
-    <p class="scout-note">Head-to-heads pulled from her published WTN match results &mdash; players near her level she&rsquo;s already faced. <strong>Nearest rating</strong> and any <strong>rematch</strong> are flagged. <strong>Tap any WTN</strong> to look that player up on World Tennis Number. Send me an upcoming draw and I&rsquo;ll add the whole field here with WTNs and H2H.</p>
-  </section>
-
-  <!-- ============ RIVAL WATCH ============ -->
-  <section class="block">
-    <div class="block-head"><h2>Rival Watch</h2><span class="rule"></span><span class="count" id="watchHint">tap a rival to watch</span></div>
-    <div class="watch" id="watch"></div>
-    <p class="scout-note">Tap any rival above to spotlight her here &mdash; head-to-head, the WTN gap, and a place to log her latest results as you spot them (public tournament data only). Set on <strong>B. Thurman</strong> by default: the one to avenge. &#127919;</p>
+    <p class="scout-note">Head-to-head records from her own published match results. We show only what the official draw already shows &mdash; opponent name as printed and the score. No photos, ratings history, or schedules of other players&rsquo; kids: they aren&rsquo;t ours to publish.</p>
   </section>
 
   <!-- ============ TEAM LADDER ============ -->
@@ -535,37 +528,13 @@
     <p class="scout-note">Ranks Camilla against her team by World Tennis Number (lower = stronger). Add her teammates and it sorts instantly — and it's exactly how an academy would want its whole roster to look. &#127934;</p>
   </section>
 
-  <!-- ============ UPCOMING ============ -->
+  <!-- ============ KEEP GOING ============ -->
   <section class="block">
-    <div class="block-head"><h2>Upcoming in Texas</h2><span class="rule"></span><span class="count">tap to fill</span></div>
-    <div class="upcoming">
-      <div class="upcard">
-        <div class="uname" data-field="up1_name" data-placeholder="Tournament name">Next Texas event</div>
-        <div class="umeta"><span data-field="up1_date" data-placeholder="Dates">Add dates</span><span>&middot;</span><span data-field="up1_city" data-placeholder="City / venue">Add city</span></div>
-        <div class="ufield"><span class="plus">+</span> Field &amp; seeds &mdash; share the draw</div>
-      </div>
-      <div class="upcard">
-        <div class="uname" data-field="up2_name" data-placeholder="Tournament name">Another event</div>
-        <div class="umeta"><span data-field="up2_date" data-placeholder="Dates">Add dates</span><span>&middot;</span><span data-field="up2_city" data-placeholder="City / venue">Add city</span></div>
-        <div class="ufield"><span class="plus">+</span> Field &amp; seeds &mdash; share the draw</div>
-      </div>
-    </div>
-    <p class="scout-note">Drop a tournament name here (or its USTA/WTN link) and I&rsquo;ll list who&rsquo;s entered, their World Tennis Numbers, the seeds, and how Camilla&rsquo;s matched up against any of them before.</p>
-  </section>
-
-  <!-- ============ NEXT UP ============ -->
-  <section class="block">
-    <div class="next rise">
-      <p class="kick">Next up</p>
-      <h3 data-field="nextName" data-placeholder="Name her next tournament">Her next tournament</h3>
-      <p class="when" id="nextWhen">Pick a date and the countdown begins.</p>
-      <div class="countdown" id="countdown" hidden>
-        <div class="cd"><div class="n mono" id="cdDays">0</div><div class="u">Days</div></div>
-        <div class="cd"><div class="n mono" id="cdHrs">0</div><div class="u">Hours</div></div>
-        <div class="cd"><div class="n mono" id="cdMin">0</div><div class="u">Min</div></div>
-      </div>
-      <div class="next-controls"><input class="date-input" type="date" id="nextDate" aria-label="Next tournament date"></div>
+    <div class="next">
+      <p class="kick">Keep going</p>
+      <h3>One point at a time</h3>
       <div class="hype"><span class="spark" aria-hidden="true">&#9654;</span><span class="hype-text" id="hype">9&ndash;1 in July, the number&rsquo;s dropping &mdash; now we go get the next one.</span></div>
+      <p class="scout-note">Upcoming tournament dates and venues are kept off this page on purpose &mdash; a public page shouldn&rsquo;t say where a kid will be next weekend. Her family gets those in the app.</p>
     </div>
   </section>
 
@@ -757,55 +726,21 @@
   var rc=document.getElementById("rivals"); var rivalEls=[];
   if(rc){ RIVALS.forEach(function(r,i){
     var el=document.createElement("div"); el.className="rival rise"; el.style.transitionDelay=(i*0.05)+"s";
-    el.setAttribute("role","button"); el.setAttribute("tabindex","0"); el.setAttribute("aria-label","Watch "+r.opp);
     var tag = r.tag==="near" ? '<span class="rtag near">Nearest rating</span>'
             : r.tag==="rematch" ? '<span class="rtag rematch">Rematch watch</span>' : '';
     el.innerHTML = tag +
       '<div class="rtop"><span class="ropp">'+esc(r.opp)+'</span><span class="rwtn">WTN '+wtnLink(r.opp,r.wtn)+'</span></div>'+
       '<div class="rh2h"><span class="big '+(r.win?'lead':'trail')+'">'+r.h2h+'</span><span class="h2hlab">H2H</span></div>'+
       '<div class="rlast">'+esc(r.last)+'</div>';
-    el.addEventListener("click",function(){ selectWatch(i); });
-    el.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); selectWatch(i); } });
     rc.appendChild(el); rivalEls.push(el);
   }); }
 
-  /* -------- rival watch spotlight -------- */
-  var watchEl=document.getElementById("watch"), watchHint=document.getElementById("watchHint");
-  function selectWatch(i){ set("watchIdx",String(i)); renderWatch(i); }
-  function renderWatch(i){
-    if(!watchEl) return;
-    var r=RIVALS[i], theirWtn=parseFloat(r.wtn), edge=theirWtn-CAM_WTN, ahead=edge>0;
-    var status = r.win
-      ? '<span class="pill played">Lead to protect &middot; H2H '+r.h2h+'</span>'
-      : '<span class="pill" style="background:var(--loss-soft);color:var(--loss);border:1px solid var(--loss)"><span aria-hidden="true">&#9654;</span> Rematch watch &middot; H2H '+r.h2h+'</span>';
-    var meShare=Math.round(theirWtn/(theirWtn+CAM_WTN)*100);
-    meShare=Math.max(30,Math.min(70,meShare));
-    var cap = ahead
-      ? 'Camilla is rated <strong>'+edge.toFixed(1)+' ahead</strong> &mdash; lower WTN is stronger. On paper, this rematch is hers to take.'
-      : 'Camilla trails by <strong>'+Math.abs(edge).toFixed(1)+'</strong> on WTN &mdash; a real test, and a great scalp.';
-    rivalEls.forEach(function(e,idx){ e.classList.toggle("sel",idx===i); });
-    if(watchHint) watchHint.textContent="watching "+r.opp;
-    watchEl.innerHTML =
-      '<div class="wtop"><div class="wname">'+esc(r.opp)+'<span class="sub">World Tennis Number '+wtnLink(r.opp,r.wtn)+'</span></div>'+status+'</div>'+
-      '<div class="wbody">'+
-        '<div class="wstat"><span class="k">Head-to-head</span><span class="v" style="color:'+(r.win?'var(--win)':'var(--loss)')+'">'+r.h2h+'</span></div>'+
-        '<div class="wstat"><span class="k">Their WTN</span><span class="v">'+wtnLink(r.opp,r.wtn)+'</span></div>'+
-        '<div class="wstat"><span class="k">Camilla&rsquo;s WTN</span><span class="v" style="color:var(--court)">'+CAM_WTN.toFixed(1)+'</span></div>'+
-        '<div class="wstat"><span class="k">Last meeting</span><span class="v" style="font-size:13.5px;font-family:var(--f-body);font-weight:600">'+esc(r.last)+'</span></div>'+
-      '</div>'+
-      '<div class="edge"><div class="bar"><div class="me" style="flex:0 0 '+meShare+'%">Camilla '+CAM_WTN.toFixed(1)+'</div><div class="them">'+esc(r.opp)+' '+esc(r.wtn)+'</div></div><div class="cap">'+cap+'</div></div>'+
-      '<div class="watch-note"><span class="lbl">Latest on '+esc(r.opp)+' &mdash; tap to add</span><div data-field="watch_'+i+'" data-placeholder="Log her recent results / next event as you spot them"></div></div>';
-    var nf=watchEl.querySelector('[data-field]'); if(nf) wireField(nf);
-  }
-  var defIdx=(function(){ var s=get("watchIdx",null); if(s!==null){ var n=parseInt(s,10); if(!isNaN(n)&&n>=0&&n<RIVALS.length) return n; }
-    for(var k=0;k<RIVALS.length;k++){ if(RIVALS[k].tag==="rematch") return k; } return 0; })();
-  renderWatch(defIdx);
-
   /* -------- highlights gallery + lightbox -------- */
   var MEDIA=[
-    // Photos/video drop in here. Examples:
-    // {type:"photo", src:"media/zoe-final.jpg", caption:"Championship point", event:"Jul 26", credit:"Team photographer"},
-    // {type:"video", youtube:"YouTubeID", poster:"media/thumb.jpg", caption:"Match point", event:"Jul 26"}
+    {type:"photo", src:"media/serve-full-extension.jpg", poster:"media/serve-full-extension-thumb.jpg",
+     caption:"Full extension \u2014 ball up, racquet back", event:"2026 season", credit:"Family photo"},
+    {type:"photo", src:"media/baseline-ready.jpg", poster:"media/baseline-ready-thumb.jpg",
+     caption:"Loaded up on the backhand", event:"2026 season", credit:"Family photo"}
   ];
   var gal=document.getElementById("gallery"), galControls=document.getElementById("galControls");
   var lb=document.getElementById("lightbox"), lbStage=document.getElementById("lbStage"), lbCap=document.getElementById("lbCap");
@@ -872,7 +807,7 @@
     {i:"\uD83D\uDD25",t:"9\u20131 July",s:"Nine match wins in a month",earned:true},
     {i:"\uD83D\uDCC9",t:"WTN Personal Best",s:"33.3 and dropping",earned:true},
     {i:"\u2705",t:"Event Sweep",s:"Won every match \u00b7 RacFit",earned:true},
-    {i:"\uD83D\uDCAA",t:"Avenge Thurman",s:"Beat B. Thurman in the rematch",earned:false},
+    {i:"\uD83D\uDCAA",t:"Win the Rematch",s:"Take the one that got away",earned:false},
     {i:"\u2B50",t:"Break Sub-33 WTN",s:"Push the number under 33.0",earned:false}
   ];
   var tcEl=document.getElementById("trophies");
@@ -936,21 +871,9 @@
   tBtn.addEventListener("click",function(){ var cur=root.getAttribute("data-theme");
     var next=(cur==="dark")?"light":(cur==="light"?"dark":(sysDark()?"light":"dark")); set("theme",next); applyTheme(next); });
 
-  /* -------- countdown -------- */
-  var dateInput=document.getElementById("nextDate"),cd=document.getElementById("countdown"),when=document.getElementById("nextWhen"),
-      dD=document.getElementById("cdDays"),dH=document.getElementById("cdHrs"),dM=document.getElementById("cdMin");
-  var savedDate=get("nextDate",""); if(savedDate)dateInput.value=savedDate;
-  function fmt(d){ try{ return new Date(d+"T00:00:00").toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"});}catch(e){return d;} }
-  function tick(){ var v=dateInput.value;
-    if(!v){ cd.hidden=true; when.textContent="Pick a date and the countdown begins."; return; }
-    var target=new Date(v+"T08:00:00").getTime(),now=Date.now(),diff=target-now;
-    if(diff<=0){ cd.hidden=true; when.innerHTML="It’s tournament day &mdash; go get it. 🎾"; return; }
-    cd.hidden=false; when.textContent=fmt(v);
-    dD.textContent=Math.floor(diff/86400000); dH.textContent=Math.floor(diff%86400000/3600000); dM.textContent=Math.floor(diff%3600000/60000); }
-  dateInput.addEventListener("change",function(){ set("nextDate",dateInput.value); tick(); });
-  tick(); setInterval(tick,30000);
 })();
 </script>
+
 
 
 
