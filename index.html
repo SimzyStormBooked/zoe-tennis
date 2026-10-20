@@ -107,18 +107,18 @@
   .cred.optic{color:var(--optic-ink);background:var(--optic-bright);border-color:transparent;font-weight:700;}
   .cred .star{color:#F3D889;}
 
-  .badge{position:relative;width:clamp(150px,26vw,196px);height:clamp(150px,26vw,196px);flex:none;display:grid;place-items:center;}
+  .badge{position:relative;width:clamp(150px,26vw,196px);height:clamp(150px,26vw,196px);flex:none;margin-bottom:30px;display:grid;place-items:center;}
   .badge svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);}
   .badge .ring-bg{fill:none;stroke:rgba(255,255,255,.14);stroke-width:8;}
   .badge .ring-fg{fill:none;stroke:url(#ringgrad);stroke-width:8;stroke-linecap:round;stroke-dasharray:534;stroke-dashoffset:534;}
   .revealed .badge .ring-fg{transition:stroke-dashoffset 1.3s cubic-bezier(.2,.7,.2,1) .25s;}
   .badge .inner{text-align:center;display:flex;flex-direction:column;align-items:center;gap:1px;z-index:1;}
   .badge .rlabel{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.2em;font-size:10.5px;color:rgba(255,255,255,.7);}
-  .badge .rnum{font-family:var(--f-mono);font-weight:700;font-size:clamp(38px,8vw,58px);line-height:.9;letter-spacing:-.02em;color:#fff;}
+  .badge .rnum{font-family:var(--f-mono);font-weight:700;font-size:clamp(34px,7vw,50px);line-height:.9;letter-spacing:-.02em;color:#fff;}
   .badge .rnum[data-field].is-empty{font-family:var(--f-body);font-style:italic;font-size:14px;line-height:1.25;color:rgba(255,255,255,.72);max-width:120px;font-weight:400;}
   .badge .rsub{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.12em;font-size:9.5px;color:var(--optic-bright);display:flex;align-items:center;gap:5px;margin-top:2px;}
   .badge .rsub .vchk{width:12px;height:12px;fill:var(--optic-bright);}
-  .trend{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.08em;font-size:9.5px;color:#bfe36a;background:rgba(0,0,0,.25);padding:3px 8px;border-radius:999px;}
+  .trend{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.08em;font-size:9.5px;color:#bfe36a;background:rgba(0,0,0,.25);padding:3px 8px;border-radius:999px;}
 
   .form-strip{position:relative;z-index:1;display:flex;align-items:center;gap:9px;flex-wrap:wrap;
     padding:clamp(14px,2.5vw,18px) clamp(24px,4.5vw,48px);border-top:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.16);}
@@ -406,10 +406,10 @@
         </svg>
         <div class="inner">
           <span class="rlabel" data-field="ratingType" data-default="WTN" data-placeholder="WTN">WTN</span>
-          <span class="rnum" data-field="rating" data-default="33.3" data-placeholder="Add rating">33.3</span>
+          <span class="rnum" data-field="rating" data-default="32.44" data-placeholder="Add rating">32.44</span>
           <span class="rsub"><svg class="vchk" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 1.8 3-.2 1 2.8 2.6 1.5-.9 2.9.9 2.9-2.6 1.5-1 2.8-3-.2L12 22l-2.4-1.8-3 .2-1-2.8L3 16.3l.9-2.9L3 10.5l2.6-1.5 1-2.8 3 .2L12 2z" fill="currentColor"/><path d="M8.5 12.2l2.3 2.3 4.5-4.7" fill="none" stroke="#0a2f3a" stroke-width="2" stroke-linecap="round"/></svg> Verified</span>
         </div>
-        <span class="trend">&#9660; from 33.4 &middot; improving</span>
+        <span class="trend">&#9660; 0.96 since July</span>
       </div>
     </div>
 
@@ -470,11 +470,12 @@
         </div>
         <div class="cb">
           <div class="rate-lines">
-            <div class="rate-row"><span class="k">World Tennis Number</span><span class="val" data-field="wtn" data-default="33.3" data-placeholder="—">33.3</span></div>
-            <div class="rate-row"><span class="k">USTA Texas Ranking</span><span class="val" data-field="usta" data-placeholder="—">&mdash;</span></div>
+            <div class="rate-row"><span class="k">WTN Singles</span><span class="val" data-field="wtn" data-default="32.44" data-placeholder="—">32.44</span></div>
+            <div class="rate-row"><span class="k">WTN Doubles</span><span class="val" data-field="wtnDbl" data-default="32.18" data-placeholder="—">32.18</span></div>
+            <div class="rate-row"><span class="k">USTA Texas Ranking</span><span class="val" data-field="usta" data-default="#195 &middot; Girls&rsquo; 12" data-placeholder="—">#195 &middot; Girls&rsquo; 12</span></div>
             <div class="rate-row"><span class="k">TennisRecruiting Stars</span><span class="val" data-field="trn" data-placeholder="—">&mdash;</span></div>
           </div>
-          <p class="rate-note">World Tennis Number is the rating USTA uses &mdash; <strong>lower is stronger</strong>, so her 33.4&nbsp;&rarr;&nbsp;33.3 is the right direction. USTA/WTN doesn&rsquo;t offer a simple auto-feed, so drop new numbers in here (or send a fresh screenshot) and I&rsquo;ll keep it current.</p>
+          <p class="rate-note">World Tennis Number is the rating USTA uses &mdash; <strong>lower is stronger</strong>, so her 33.4&nbsp;&rarr;&nbsp;32.44 since July is the right direction. <em>Updated Oct 15, 2026 from her USTA profile.</em> USTA/WTN doesn&rsquo;t offer a simple auto-feed, so drop new numbers in here (or send a fresh screenshot) and I&rsquo;ll keep it current.</p>
           <a class="profile-link" id="ustaLink" href="#" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4L10 14"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
             Official USTA profile
@@ -488,7 +489,7 @@
           <div class="chartwrap">
             <svg class="chartsvg" id="wtnChart" viewBox="0 0 320 172" preserveAspectRatio="none" aria-label="World Tennis Number trend"></svg>
           </div>
-          <div class="chart-cap"><span>Jul 4 &rarr; Jul 18</span><span><b>&#9660; 0.1 better</b> &middot; more points as she plays</span></div>
+          <div class="chart-cap"><span>Jul 4 &rarr; Oct 15</span><span><b>&#9660; 0.96 better</b> &middot; more points as she plays</span></div>
         </div>
       </div>
     </div>
@@ -681,12 +682,13 @@
     requestAnimationFrame(step);
   });
 
-  /* -------- WTN trajectory chart (2 real points, y inverted so improvement rises) -------- */
+  /* -------- WTN trajectory chart (real readings, y inverted so improvement rises) -------- */
   (function(){
     var svg=document.getElementById("wtnChart"); if(!svg) return;
-    var pts=[{lab:"Jul 4",wtn:33.4},{lab:"Jul 18",wtn:33.3}];
+    var pts=[{lab:"Jul 4",wtn:33.4},{lab:"Jul 18",wtn:33.3},{lab:"Oct 15",wtn:32.44}];
     var W=320,H=172,padX=34,padY=26, plotW=W-padX*2, plotH=H-padY*2;
-    var lo=33.2, hi=33.5; // tight axis; lower wtn plotted higher
+    var ws=pts.map(function(p){return p.wtn;}), wmin=Math.min.apply(null,ws), wmax=Math.max.apply(null,ws), pad=Math.max(0.1,(wmax-wmin)*0.15);
+    var lo=wmin-pad, hi=wmax+pad; // axis fits the readings; lower wtn plotted higher
     function X(i){ return padX + (pts.length===1?plotW/2:(i/(pts.length-1))*plotW); }
     function Y(w){ return padY + ((w-lo)/(hi-lo))*plotH; } // higher wtn -> lower on chart
     var ns="http://www.w3.org/2000/svg";
@@ -707,7 +709,7 @@
       var c=document.createElementNS(ns,"circle"); c.setAttribute("cx",X(i)); c.setAttribute("cy",Y(p.wtn)); c.setAttribute("r",i===pts.length-1?5:3.5);
       c.setAttribute("fill",i===pts.length-1?"var(--win)":"var(--surface)"); c.setAttribute("stroke","var(--win)"); c.setAttribute("stroke-width","2"); svg.appendChild(c);
       var tv=document.createElementNS(ns,"text"); tv.setAttribute("x",X(i)); tv.setAttribute("y",Y(p.wtn)-11); tv.setAttribute("text-anchor","middle");
-      tv.setAttribute("font-family","var(--f-mono)"); tv.setAttribute("font-size","12"); tv.setAttribute("font-weight","700"); tv.setAttribute("fill","var(--ink)"); tv.textContent=p.wtn.toFixed(1); svg.appendChild(tv);
+      tv.setAttribute("font-family","var(--f-mono)"); tv.setAttribute("font-size","12"); tv.setAttribute("font-weight","700"); tv.setAttribute("fill","var(--ink)"); tv.textContent=String(Math.round(p.wtn*100)/100); svg.appendChild(tv);
       var tl2=document.createElementNS(ns,"text"); tl2.setAttribute("x",X(i)); tl2.setAttribute("y",H-8); tl2.setAttribute("text-anchor","middle");
       tl2.setAttribute("font-family","var(--f-display)"); tl2.setAttribute("font-size","10"); tl2.setAttribute("letter-spacing","1"); tl2.setAttribute("fill","var(--ink-faint)"); tl2.textContent=p.lab.toUpperCase(); svg.appendChild(tl2);
     });
@@ -722,7 +724,7 @@
     {opp:"R. Connell",wtn:"37.9", h2h:"1–0", win:true,  last:"W 4–0, 4–0 · Jul 4"},
     {opp:"E. Paul",   wtn:"38.5", h2h:"1–0", win:true,  last:"W 4–1, 4–1 · Jul 4"}
   ];
-  var CAM_WTN=33.3;
+  var CAM_WTN=32.44;
   var rc=document.getElementById("rivals"); var rivalEls=[];
   if(rc){ RIVALS.forEach(function(r,i){
     var el=document.createElement("div"); el.className="rival rise"; el.style.transitionDelay=(i*0.05)+"s";
@@ -805,7 +807,7 @@
     {i:"\uD83C\uDFC6",t:"Tournament Champion",s:"Won the title \u00b7 Jul 26",earned:true,gold:true},
     {i:"\uD83C\uDFAF",t:"4\u20130 Sweep",s:"Four wins, none dropped \u00b7 Jul 26",earned:true},
     {i:"\uD83D\uDD25",t:"9\u20131 July",s:"Nine match wins in a month",earned:true},
-    {i:"\uD83D\uDCC9",t:"WTN Personal Best",s:"33.3 and dropping",earned:true},
+    {i:"\uD83D\uDCC9",t:"WTN Personal Best",s:"32.44 and dropping",earned:true},
     {i:"\u2705",t:"Event Sweep",s:"Won every match \u00b7 RacFit",earned:true},
     {i:"\uD83D\uDCAA",t:"Win the Rematch",s:"Take the one that got away",earned:false},
     {i:"\u2B50",t:"Break Sub-33 WTN",s:"Push the number under 33.0",earned:false}
@@ -823,7 +825,7 @@
   }
 
   /* -------- team ladder -------- */
-  function camWtn(){ var v=parseFloat((get("f.wtn","33.3")||"33.3").replace(/[^\d.]/g,"")); return isNaN(v)?33.3:v; }
+  function camWtn(){ var v=parseFloat((get("f.wtn","32.44")||"32.44").replace(/[^\d.]/g,"")); return isNaN(v)?32.44:v; }
   function renderLadder(){
     var ladderEl=document.getElementById("ladder"), rankEl=document.getElementById("teamRank"); if(!ladderEl) return;
     var players=[{name:"Camilla",wtn:camWtn(),me:true}];
@@ -856,7 +858,7 @@
   /* -------- hype rotator -------- */
   var lines=["9–1 in July, the number’s dropping — now we go get the next one.",
     "Champions are built one point at a time.","One loss, in a battle. Everything else, a win.",
-    "WTN 33.4 → 33.3 — the arrow’s pointing the right way.","San Antonio’s finest. Next trophy loading.",
+    "WTN 33.4 → 32.44 — the arrow’s pointing the right way.","San Antonio’s finest. Next trophy loading.",
     "She showed up, she competed, she won the day."];
   var hype=document.getElementById("hype"),hi=0;
   if(hype&&!reduce){ setInterval(function(){ hype.style.opacity=0;
